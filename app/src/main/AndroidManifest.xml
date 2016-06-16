@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.loz.iyaf">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAFPCFY1QsI1nfsKuHSZnKxs8NSxFAFT9Y" />
+
+        <activity android:name="com.loz.iyaf.mainmenu.MenuActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.events.EventListActivity"
+            android:label="Events"
+            android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.mainmenu.MenuActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.news.NewsListActivity"
+            android:label="News"
+            android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.mainmenu.MenuActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.twitter.TwitterListActivity"
+            android:label="Twitter"
+            android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.mainmenu.MenuActivity" />
+        </activity>
+        <!--<activity-->
+            <!--android:name=".vouchers.VoucherListActivity"-->
+            <!--android:label="Vouchers"-->
+            <!--android:parentActivityName=".mainmenu.MenuActivity"-->
+            <!--android:theme="@style/Theme.AppCompat.Light">-->
+
+            <!--&lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value=".mainmenu.MenuActivity" />-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name=".vouchers.VoucherActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden"-->
+            <!--android:label="Voucher"-->
+            <!--android:parentActivityName=".vouchers.VoucherListActivity"-->
+            <!--android:screenOrientation="landscape"-->
+            <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar">-->
+
+            <!--&lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value=".vouchers.VoucherListActivity" />-->
+        <!--</activity>-->
+        <activity
+            android:name="com.loz.iyaf.traders.TraderListActivity"
+            android:label="Traders"
+            android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.mainmenu.MenuActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.traders.TraderActivity"
+            android:label="Trader"
+            android:parentActivityName="com.loz.iyaf.traders.TraderListActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.traders.TraderListActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.events.EventActivity"
+            android:label="Event"
+            android:parentActivityName="com.loz.iyaf.events.EventListActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.events.EventListActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.gallery.GalleryActivity"
+            android:label="Gallery"
+            android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.mainmenu.MenuActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.gallery.GalleryFullscreenActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
+        <activity
+            android:name="com.loz.iyaf.gallery.GalleryUploadPhotoActivity"
+            android:label="Gallery"
+            android:parentActivityName="com.loz.iyaf.gallery.GalleryActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.gallery.GalleryActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.info.InfoListActivity"
+            android:label="Get Involved"
+            android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.mainmenu.MenuActivity" />
+        </activity>
+        <activity
+            android:name="com.loz.iyaf.info.InfoActivity"
+            android:label="Get Involved"
+            android:parentActivityName="com.loz.iyaf.traders.TraderListActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.traders.TraderListActivity" />
+        </activity>
+    </application>
+
+</manifest>

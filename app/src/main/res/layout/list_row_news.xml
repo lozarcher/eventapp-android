@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@android:color/white"
+    android:padding="10dip" >
+
+    <!--  ListRow Left Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dip">
+
+        <!-- Created Date -->
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="Date"
+            android:layout_marginTop="6dp"
+            android:textColor="#040404"
+            android:typeface="normal"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/newsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingRight="20dp"
+        android:text="News Text"
+        android:textColor="#040404"
+        android:typeface="normal"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:autoLink="all"
+        android:layout_marginTop="6dp"
+        android:layout_below="@+id/newsImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/newsImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/thumbnail"
+        android:layout_marginTop="6dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Link Text"
+        android:id="@+id/linkText"
+        android:paddingEnd="12dp"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="6dp"
+        android:textColor="#0000ff"
+        android:typeface="normal"
+        android:textSize="14sp"
+        android:layout_below="@+id/newsText" />
+
+</RelativeLayout>
