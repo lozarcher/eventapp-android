@@ -88,7 +88,7 @@
         <!--</activity>-->
         <activity
             android:name="com.loz.iyaf.traders.TraderListActivity"
-            android:label="Traders"
+            android:label="Performers"
             android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
@@ -99,7 +99,7 @@
         </activity>
         <activity
             android:name="com.loz.iyaf.traders.TraderActivity"
-            android:label="Trader"
+            android:label="Performer"
             android:parentActivityName="com.loz.iyaf.traders.TraderListActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
@@ -146,7 +146,7 @@
         </activity>
         <activity
             android:name="com.loz.iyaf.info.InfoListActivity"
-            android:label="Get Involved"
+            android:label="Info"
             android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
@@ -157,7 +157,7 @@
         </activity>
         <activity
             android:name="com.loz.iyaf.info.InfoActivity"
-            android:label="Get Involved"
+            android:label="Info"
             android:parentActivityName="com.loz.iyaf.traders.TraderListActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
