@@ -42,7 +42,7 @@ public class MenuActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 1:
-                        intent = new Intent(MenuActivity.this, GalleryActivity.class);
+                        intent = new Intent(MenuActivity.this, TraderListActivity.class);
                         startActivity(intent);
                         break;
                     case 2:
@@ -50,15 +50,15 @@ public class MenuActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 3:
-                        intent = new Intent(MenuActivity.this, TraderListActivity.class);
+                        intent = new Intent(MenuActivity.this, GalleryActivity.class);
                         startActivity(intent);
                         break;
                     case 4:
-                        intent = new Intent(MenuActivity.this, InfoListActivity.class);
+                        intent = new Intent(MenuActivity.this, TwitterListActivity.class);
                         startActivity(intent);
                         break;
                     case 5:
-                        intent = new Intent(MenuActivity.this, TwitterListActivity.class);
+                        intent = new Intent(MenuActivity.this, InfoListActivity.class);
                         startActivity(intent);
                         break;
                 }

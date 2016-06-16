@@ -71,8 +71,8 @@ public class MenuAdapter extends BaseAdapter {
     // references to our images
     private Integer[] mThumbIds = {
             R.drawable.menu_events, R.drawable.menu_performers,
-            R.drawable.menu_news, R.drawable.menu_twitter,
-            R.drawable.menu_tickets, R.drawable.menu_donate
+            R.drawable.menu_news, R.drawable.menu_gallery,
+            R.drawable.menu_twitter, R.drawable.menu_info
     };
 
 }
