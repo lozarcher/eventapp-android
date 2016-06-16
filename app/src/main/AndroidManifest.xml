@@ -19,7 +19,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAFPCFY1QsI1nfsKuHSZnKxs8NSxFAFT9Y" />
+            android:value="AIzaSyDhFrxEFrZhH6JWDDyn85A_eVWsT0w_c1I" />
 
         <activity android:name="com.loz.iyaf.mainmenu.MenuActivity"
             android:screenOrientation="portrait">
