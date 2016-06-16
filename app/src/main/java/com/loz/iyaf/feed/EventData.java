@@ -70,7 +70,7 @@ public class EventData implements Serializable {
 
     public String getLocation() {
         if (location == null) {
-            return "Surbiton";
+            return "Kingston";
         } else {
             return location;
         }
