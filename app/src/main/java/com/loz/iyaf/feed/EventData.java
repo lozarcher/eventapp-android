@@ -16,6 +16,7 @@ public class EventData implements Serializable {
     private Date endTime;
     private String location;
     private VenueData venue;
+    private String ticketUrl;
 
     public EventData() {
     }
@@ -112,4 +113,11 @@ public class EventData implements Serializable {
         this.coverOffsetX = coverOffsetX;
     }
 
+    public String getTicketUrl() {
+        return ticketUrl;
+    }
+
+    public void setTicketUrl(String ticketUrl) {
+        this.ticketUrl = ticketUrl;
+    }
 }

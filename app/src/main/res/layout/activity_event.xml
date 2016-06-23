@@ -100,9 +100,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:text="Buy Tickets"
+        android:layout_below="@+id/eventAbout"
+        android:id="@+id/ticketButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/ticketButton"
         android:text="Add to Calendar"
         android:id="@+id/calendarButton"
-        android:layout_below="@+id/eventAbout"
         android:layout_centerHorizontal="true" />
 
     <fragment

@@ -1,11 +1,15 @@
 package com.loz.iyaf.events;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.CalendarContract;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,6 +97,26 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
                 startActivity(intent);
             }
         });
+
+        Button ticketButton = (Button) findViewById(R.id.ticketButton);
+        if (event.getTicketUrl() != null) {
+            ticketButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.getTicketUrl()));
+                    startActivity(browserIntent);
+                }
+            });
+        } else {
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            p.addRule(RelativeLayout.BELOW, R.id.eventAbout);
+            p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            p.setMargins(0, Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getApplicationContext().getResources().getDisplayMetrics())), 0, 0);
+            calendarButton.setLayoutParams(p);
+            ticketButton.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
