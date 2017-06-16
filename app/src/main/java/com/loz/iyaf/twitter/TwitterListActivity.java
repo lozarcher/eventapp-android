@@ -37,7 +37,7 @@ public class TwitterListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_twitterlist);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://eventapp.eu-west-1.elasticbeanstalk.com")
+                .baseUrl("https://eventapp.lozarcher.co.uk")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
         eventappService = retrofit.create(EventappService.class);

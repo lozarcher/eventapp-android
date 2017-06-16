@@ -59,7 +59,7 @@ public class GalleryUploadPhotoActivity extends AppCompatActivity {
                     }
                     uploadButton.setEnabled(false);
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://eventapp.eu-west-1.elasticbeanstalk.com")
+                            .baseUrl("https://eventapp.lozarcher.co.uk")
                             .addConverterFactory(JacksonConverterFactory.create())
                             .build();
 

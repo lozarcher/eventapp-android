@@ -59,7 +59,7 @@ public class GalleryActivity extends ActivityManagePermission {
         setContentView(R.layout.activity_gallery);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://eventapp.eu-west-1.elasticbeanstalk.com")
+                .baseUrl("https://eventapp.lozarcher.co.uk")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
