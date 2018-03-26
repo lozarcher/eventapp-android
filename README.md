@@ -3,11 +3,11 @@
 
 This project is is currently responsible for two festival apps in the store, shown below. The theme is chosen at build time by selecting the appropriate build variant.
 
-### Surbiton Food Festival - [Store](http://onlink.to/surbitonfood)
+### Surbiton Food Festival - [Store](http://onelink.to/surbitonfood)
 
 ![Surbiton Food screenshot](https://github.com/lozarcher/eventapp-ios-foodfest/blob/master/Screenshots/foodfestialiphone.png) 
 
-### International Youth Arts Festival - [Store](http://onlink.to/iyaf)
+### International Youth Arts Festival - [Store](http://onelink.to/iyaf)
 
 ![IYAF screenshot](https://github.com/lozarcher/eventapp-ios-foodfest/blob/master/Screenshots/iyaf2016.jpg) 
 
