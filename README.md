@@ -10,6 +10,6 @@
 
 ### Related Repositories
 
-[iPhone App](https://github.com/lozarcher/eventapp-ios) 
+[Android App: eventapp-ios](https://github.com/lozarcher/eventapp-ios) 
 
-These apps gets their data by accessing REST endpoints exposed by the project [eventapp-feeder](https://github.com/lozarcher/eventapp-feeder/).
+[eventapp-feeder](https://github.com/lozarcher/eventapp-feeder/), which exposes data as REST endpoints to be consumed by the apps.
