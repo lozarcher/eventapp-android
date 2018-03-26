@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.loz.iyaf.feed.GalleryData;
 import com.loz.iyaf.imagehelpers.TouchImageView;
 import com.loz.iyaf.imagehelpers.Utils;
-import com.loz.iyaf.R;
+import com.loz.R;
 
 public class FullScreenImageAdapter extends PagerAdapter {
 

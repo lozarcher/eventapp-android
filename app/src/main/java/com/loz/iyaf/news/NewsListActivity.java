@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.loz.iyaf.feed.NewsData;
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.loz.iyaf.feed.EventappService;
 import com.loz.iyaf.feed.NewsList;
 import com.loz.iyaf.imagehelpers.JsonCache;

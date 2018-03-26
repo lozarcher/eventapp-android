@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.loz.iyaf.feed.InfoData;
 import com.loz.iyaf.imagehelpers.Utils;
-import com.loz.iyaf.R;
+import com.loz.R;
 
 public class InfoActivity extends AppCompatActivity {
 

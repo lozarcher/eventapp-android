@@ -40,7 +40,6 @@ android {
             versionCode 7
             versionName "2.0"
             signingConfig signingConfigs.androidKey
-            getProps('./config/surbitonfood.properties').each { p -> buildConfigField 'String', p.key, '"'+p.value+'"' }
         }
         iyaf {
                 dimension "app"
@@ -51,16 +50,10 @@ android {
                 versionCode 7
                 versionName "2.0"
                 signingConfig signingConfigs.androidKey
-                getProps('./config/iyaf.properties').each { p -> buildConfigField 'String', p.key, '"'+p.value+'"' }
         }
     }
 }
 
-def getProps(path) {
-    Properties props = new Properties()
-    props.load(new FileInputStream(file(path)))
-    return props
-}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

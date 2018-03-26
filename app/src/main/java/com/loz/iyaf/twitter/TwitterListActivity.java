@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.loz.iyaf.feed.TwitterList;
 import com.loz.iyaf.imagehelpers.JsonCache;
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.loz.iyaf.feed.EventappService;
 import com.loz.iyaf.feed.TwitterData;
 

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.loz.iyaf.R;
+import com.loz.R;
 
 public class KPoundActivity extends AppCompatActivity {
 

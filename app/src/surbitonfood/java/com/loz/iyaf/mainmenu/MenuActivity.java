@@ -14,7 +14,7 @@ import com.loz.iyaf.info.InfoListActivity;
 import com.loz.iyaf.news.NewsListActivity;
 import com.loz.iyaf.traders.TraderListActivity;
 import com.loz.iyaf.twitter.TwitterListActivity;
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 

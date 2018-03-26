@@ -20,7 +20,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.loz.iyaf.feed.EventData;
 import com.loz.iyaf.imagehelpers.Utils;
 

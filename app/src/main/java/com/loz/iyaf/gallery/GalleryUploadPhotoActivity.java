@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.loz.iyaf.feed.EventappService;
 import com.loz.iyaf.feed.GalleryList;
 import com.squareup.okhttp.MediaType;

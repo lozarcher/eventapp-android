@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.loz.iyaf.feed.GalleryData;
-import com.loz.iyaf.R;
+import com.loz.R;
 
 import java.util.ArrayList;
 

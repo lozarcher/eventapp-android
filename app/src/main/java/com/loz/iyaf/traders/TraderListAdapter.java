@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loz.iyaf.imagehelpers.Utils;
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.loz.iyaf.feed.TraderData;
 
 import java.util.ArrayList;

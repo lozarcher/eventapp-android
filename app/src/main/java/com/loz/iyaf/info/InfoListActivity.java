@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.loz.iyaf.BuildConfig;
 import com.loz.iyaf.feed.EventappService;
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.loz.iyaf.feed.InfoData;
 import com.loz.iyaf.feed.InfoList;
 import com.loz.iyaf.imagehelpers.JsonCache;
@@ -34,7 +33,7 @@ public class InfoListActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traderlist);
 
-        String infoTitle = BuildConfig.infotitle;
+        String infoTitle = getString(R.string.info_title);
         if (infoTitle == null) {
             infoTitle = "Info";
         }

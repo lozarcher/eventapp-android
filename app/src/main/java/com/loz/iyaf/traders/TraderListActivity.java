@@ -8,11 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.loz.iyaf.BuildConfig;
 import com.loz.iyaf.feed.TraderList;
 import com.loz.iyaf.imagehelpers.JsonCache;
 import com.loz.iyaf.feed.EventappService;
-import com.loz.iyaf.R;
+import com.loz.R;
 import com.loz.iyaf.feed.TraderData;
 
 import java.io.ObjectInput;
@@ -39,7 +38,7 @@ public class TraderListActivity extends AppCompatActivity  {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
-        String tradersTitle = BuildConfig.traderstitle;
+        String tradersTitle = getString(R.string.traders_title);
         if (tradersTitle == null) {
             tradersTitle = "Traders";
         }

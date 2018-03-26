@@ -12,7 +12,7 @@ import com.loz.iyaf.feed.EventData;
 import com.loz.iyaf.feed.EventList;
 import com.loz.iyaf.imagehelpers.JsonCache;
 import com.loz.iyaf.feed.EventappService;
-import com.loz.iyaf.R;
+import com.loz.R;
 
 import java.io.ObjectInput;
 import java.text.SimpleDateFormat;
