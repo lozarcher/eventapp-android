@@ -1,7 +1,7 @@
 # eventapp-android
 ## Festival Android app
 
-This repository is currently set up for two festival apps, shown below. The theme is chosen at build time by selecting the appropriate build variant.
+This project is is currently responsible for two festival apps in the Play Store, shown below. The theme is chosen at build time by selecting the appropriate build variant.
 
 ### Surbiton Food Festival
 
