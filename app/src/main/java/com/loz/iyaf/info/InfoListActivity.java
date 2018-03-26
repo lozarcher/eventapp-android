@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.loz.iyaf.BuildConfig;
 import com.loz.iyaf.feed.EventappService;
 import com.loz.iyaf.R;
 import com.loz.iyaf.feed.InfoData;
@@ -32,6 +33,12 @@ public class InfoListActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traderlist);
+
+        String infoTitle = BuildConfig.infotitle;
+        if (infoTitle == null) {
+            infoTitle = "Info";
+        }
+        setTitle(infoTitle);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://eventapp.lozarcher.co.uk")

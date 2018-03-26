@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.loz.iyaf.BuildConfig;
 import com.loz.iyaf.feed.TraderList;
 import com.loz.iyaf.imagehelpers.JsonCache;
 import com.loz.iyaf.feed.EventappService;
@@ -37,6 +38,12 @@ public class TraderListActivity extends AppCompatActivity  {
                 .baseUrl("https://eventapp.lozarcher.co.uk")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
+
+        String tradersTitle = BuildConfig.traderstitle;
+        if (tradersTitle == null) {
+            tradersTitle = "Traders";
+        }
+        setTitle(tradersTitle);
 
         EventappService eventappService = retrofit.create(EventappService.class);
         Call<TraderList> call = eventappService.getTraders();

@@ -22,7 +22,6 @@ android {
         exclude 'META-INF/ASL2.0'
     }
     defaultConfig {
-
     }
     buildTypes {
         release {
@@ -40,17 +39,25 @@ android {
             versionCode 7
             versionName "2.0"
             signingConfig signingConfigs.androidKey
+            getProps('./config/surbitonfood.properties').each { p -> buildConfigField 'String', p.key, '"'+p.value+'"' }
         }
         iyaf {
-            dimension "app"
-            applicationId "com.loz.iyaf"
-            minSdkVersion 15
-            targetSdkVersion 23
-            versionCode 7
-            versionName "2.0"
-            signingConfig signingConfigs.androidKey
+                dimension "app"
+                applicationId "com.loz.iyaf"
+                minSdkVersion 15
+                targetSdkVersion 23
+                versionCode 7
+                versionName "2.0"
+                signingConfig signingConfigs.androidKey
+                getProps('./config/iyaf.properties').each { p -> buildConfigField 'String', p.key, '"'+p.value+'"' }
         }
     }
+}
+
+def getProps(path) {
+    Properties props = new Properties()
+    props.load(new FileInputStream(file(path)))
+    return props
 }
 
 dependencies {
