@@ -44,7 +44,7 @@ android {
         }
         iyaf {
                 dimension "app"
-                applicationId "com.l"
+                applicationId "com.loz"
                 applicationIdSuffix ".iyaf"
                 minSdkVersion 15
                 targetSdkVersion 23
