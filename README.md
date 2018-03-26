@@ -8,6 +8,8 @@
 
 ![IYAF screenshot](https://github.com/lozarcher/eventapp-ios-foodfest/blob/master/Screenshots/iyaf2016.jpg) 
 
-# Data
+### Related Repositories
 
-The app gets its data by accessing REST endpoints exposed by the project [eventapp-feeder](https://github.com/lozarcher/eventapp-feeder/).
+[Android App: eventapp-ios](https://github.com/lozarcher/eventapp-ios) 
+
+[eventapp-feeder](https://github.com/lozarcher/eventapp-feeder/), which exposes data as REST endpoints to be consumed by the apps.
