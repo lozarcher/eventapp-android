@@ -185,11 +185,12 @@ public class EventListActivity extends AppCompatActivity  {
             this.favourites.remove(event.getId().toString());
         }
         saveFavourites();
+        processEventList(eventList);
     }
 
     private void readFavourites() {
         String preferencesKey = getString(R.string.favourites_pref_key);
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getApplication().getSharedPreferences(preferencesKey,Context.MODE_PRIVATE);
 
         this.favourites = sharedPref.getStringSet(preferencesKey, null);
         if (favourites == null) {
@@ -209,7 +210,7 @@ public class EventListActivity extends AppCompatActivity  {
 
     private void saveFavourites() {
         String preferencesKey = getString(R.string.favourites_pref_key);
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getApplication().getSharedPreferences(preferencesKey,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putStringSet(preferencesKey, this.favourites);
         Log.d("LOZ", "Saved favourites: "+this.favourites+ " with key "+preferencesKey);
