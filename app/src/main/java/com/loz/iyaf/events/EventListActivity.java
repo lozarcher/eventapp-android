@@ -1,12 +1,17 @@
 package com.loz.iyaf.events;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.loz.iyaf.feed.EventData;
 import com.loz.iyaf.feed.EventList;
@@ -20,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import retrofit.Call;
@@ -32,16 +40,40 @@ import retrofit.Retrofit;
 public class EventListActivity extends AppCompatActivity  {
 
     private ArrayList<EventData> eventRows = new ArrayList<>();
+    private EventList eventList;
+    private Set<String> favourites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventlist);
 
+        ListView listView = (ListView)findViewById(R.id.listView);
+        TextView emptyList = findViewById(R.id.emptyList);
+        listView.setEmptyView(emptyList);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://eventapp.lozarcher.co.uk")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+               @Override
+               public void onTabSelected(TabLayout.Tab tab) {
+                   processEventList(eventList);
+               }
+
+               @Override
+               public void onTabUnselected(TabLayout.Tab tab) {
+
+               }
+
+               @Override
+               public void onTabReselected(TabLayout.Tab tab) {
+
+               }
+           });
 
         EventappService eventappService = retrofit.create(EventappService.class);
         Call<EventList> call = eventappService.getEvents();
@@ -51,8 +83,9 @@ public class EventListActivity extends AppCompatActivity  {
             public void onResponse(Response<EventList> response, Retrofit retrofit) {
                 Log.d("LOZ", "Got response: "+response.body().toString());
 
-                EventList eventList = response.body();
+                eventList = response.body();
                 JsonCache.writeToCache(getApplicationContext(), eventList, "events");
+                readFavourites();
                 processEventList(eventList);
             }
 
@@ -60,7 +93,6 @@ public class EventListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
-                EventList eventList = null;
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "events");
                 if (oi != null) {
                     try {
@@ -117,8 +149,12 @@ public class EventListActivity extends AppCompatActivity  {
             if (eventsOnDay == null) {
                 eventsOnDay = new ArrayList<EventData>();
             }
-            eventsOnDay.add(event);
-            map.put(dateAtMidnight, eventsOnDay);
+            if (shouldShowEvent(event)) {
+                eventsOnDay.add(event);
+            }
+            if (eventsOnDay.size() > 0) {
+                map.put(dateAtMidnight, eventsOnDay);
+            }
         }
         for (Date date : map.keySet()) {
             Log.d("Events for day", date.toString());
@@ -138,4 +174,59 @@ public class EventListActivity extends AppCompatActivity  {
             startActivity(intent);
         }
     };
+
+    protected void setFavourite(View view, EventData event) {
+        event.setFavourite(!event.isFavourite());
+        if (event.isFavourite()) {
+            ((TextView)view).setText("{fa-heart}");
+            this.favourites.add(event.getId().toString());
+        } else {
+            ((TextView)view).setText("{fa-heart-o}");
+            this.favourites.remove(event.getId().toString());
+        }
+        saveFavourites();
+    }
+
+    private void readFavourites() {
+        String preferencesKey = getString(R.string.favourites_pref_key);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
+        this.favourites = sharedPref.getStringSet(preferencesKey, null);
+        if (favourites == null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            this.favourites = new HashSet<String>();
+            editor.putStringSet(preferencesKey, this.favourites);
+            Log.d("LOZ", "Recreated favourites: "+preferencesKey);
+
+            editor.commit();
+        } else {
+            for (EventData event : eventList.getData()) {
+                event.setFavourite(this.favourites.contains(event.getId().toString()));
+            }
+            Log.d("LOZ", "Read favourites: "+this.favourites+ " with key "+preferencesKey);
+        }
+    }
+
+    private void saveFavourites() {
+        String preferencesKey = getString(R.string.favourites_pref_key);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putStringSet(preferencesKey, this.favourites);
+        Log.d("LOZ", "Saved favourites: "+this.favourites+ " with key "+preferencesKey);
+        editor.commit();
+    }
+
+    private boolean shouldShowEvent(EventData eventData) {
+        if (isFavouritesSelected()) {
+            return eventData.isFavourite();
+        } else {
+            return true;
+        }
+    }
+
+    private boolean isFavouritesSelected() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        return (tabLayout.getSelectedTabPosition() == 1);
+    }
+
 }

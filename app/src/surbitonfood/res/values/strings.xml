@@ -4,4 +4,5 @@
     <string name="traders_title">Traders</string>
     <string name="twitter_hashtag">#surbitonfood</string>
     <string name="twitter_searchterm">from:@surbitonfoodfes OR #surbitonfood</string>
+    <string name="favourites_pref_key">com.loz.surbitonfood.favourites</string>
 </resources>

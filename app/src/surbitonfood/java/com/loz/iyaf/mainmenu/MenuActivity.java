@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.loz.iyaf.events.EventListActivity;
 import com.loz.iyaf.gallery.GalleryActivity;
 import com.loz.iyaf.info.InfoListActivity;

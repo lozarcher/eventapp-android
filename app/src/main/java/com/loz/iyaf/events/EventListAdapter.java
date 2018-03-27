@@ -2,6 +2,7 @@ package com.loz.iyaf.events;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,23 @@ public class EventListAdapter extends BaseAdapter {
                 TextView subtitle = (TextView) vi.findViewById(R.id.artist); // subtitle
                 ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image); // thumb image
 
+                TextView favouriteIcon = vi.findViewById(R.id.favouriteIcon); // thumb image
                 EventData event = data.get(position);
+                if (event.isFavourite()) {
+                    favouriteIcon.setText("{fa-heart}");
+                } else {
+                    favouriteIcon.setText("{fa-heart-o}");
+                }
+                favouriteIcon.setClickable(true);
+
+                favouriteIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("LOZ", "Clicked favourite");
+                        ((EventListActivity)activity).setFavourite(view, event);
+                    }
+                });
+
 
                 // Setting all values in listview
                 title.setText(event.getName());
