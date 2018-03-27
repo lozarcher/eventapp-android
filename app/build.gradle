@@ -9,7 +9,7 @@ android {
             storePassword 'happie'
         }
     }
-    compileSdkVersion 23
+    compileSdkVersion 27
     buildToolsVersion '26.0.2'
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -20,6 +20,10 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
     }
@@ -36,7 +40,7 @@ android {
             applicationId "com.loz"
             applicationIdSuffix ".surbitonfood"
             minSdkVersion 15
-            targetSdkVersion 23
+            targetSdkVersion 27
             versionCode 7
             versionName "2.0"
             signingConfig signingConfigs.androidKey
@@ -46,7 +50,7 @@ android {
                 applicationId "com.loz"
                 applicationIdSuffix ".iyaf"
                 minSdkVersion 15
-                targetSdkVersion 23
+                targetSdkVersion 27
                 versionCode 7
                 versionName "2.0"
                 signingConfig signingConfigs.androidKey
@@ -58,13 +62,17 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:27.1.0'
+    compile 'com.android.support:recyclerview-v7:27.1.0'
+    compile 'com.android.support:design:27.1.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.google.android.gms:play-services-maps:12.0.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.google.firebase:firebase-appindexing:12.0.0'
     compile 'com.auron:permission-manage:1.0.8'
+    compile('com.twitter.sdk.android:twitter:3.2.0@aar') {
+        transitive = true
+    }
 }
 

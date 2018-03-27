@@ -64,6 +64,7 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public static void initImageLoader(Context context) {

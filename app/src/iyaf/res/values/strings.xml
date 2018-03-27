@@ -2,4 +2,6 @@
     <string name="app_name">IYAF 2018</string>
     <string name="info_title">Info</string>
     <string name="traders_title">Performers</string>
+    <string name="twitter_hashtag">#iyaf</string>
+    <string name="twitter_searchterm">from:@iyaf OR #iyaf</string>
 </resources>
