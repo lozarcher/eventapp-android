@@ -42,6 +42,7 @@ public class EventListActivity extends AppCompatActivity  {
     private ArrayList<EventData> eventRows = new ArrayList<>();
     private EventList eventList;
     private Set<String> favourites;
+    private static final int SHOW_EVENT_DETAIL = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,9 +172,43 @@ public class EventListActivity extends AppCompatActivity  {
             Bundle b = new Bundle();
             b.putSerializable("event", eventRows.get(position));
             intent.putExtras(b);
-            startActivity(intent);
+            startActivityForResult(intent, SHOW_EVENT_DETAIL);
         }
     };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("LOZ","************************* Triggered onActivityResult in Event List");
+        if (requestCode == SHOW_EVENT_DETAIL) {
+            if (resultCode == RESULT_OK) {
+                Bundle b = data.getExtras();
+                EventData viewedEvent = (EventData) b.getSerializable("event");
+                if (viewedEvent != null) {
+                    if (viewedEvent.isFavourite()) {
+                        Log.d("LOZ", "Added favourite "+viewedEvent.getName());
+                        this.favourites.add(viewedEvent.getId().toString());
+                    } else {
+                        this.favourites.remove(viewedEvent.getId().toString());
+                    }
+                    amendEventList(viewedEvent);
+                    saveFavourites();
+
+                    processEventList(eventList);
+                }
+                Log.d("LOZ", "Back from detail view with event " + viewedEvent.getName());
+            }
+        }
+    }
+
+    private void amendEventList(EventData amendedEvent) {
+        for (EventData event : eventList.getData()) {
+            if (event.getId().equals(amendedEvent.getId())) {
+                event.setFavourite(amendedEvent.isFavourite());
+            }
+        }
+    }
+
 
     protected void setFavourite(View view, EventData event) {
         event.setFavourite(!event.isFavourite());

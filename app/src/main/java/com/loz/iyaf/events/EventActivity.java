@@ -1,10 +1,20 @@
 package com.loz.iyaf.events;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -44,8 +54,9 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
         Bundle bundle = this.getIntent().getExtras();
         event = (EventData) bundle.get("event");
 
-        setTitle(event.getName());
+        setTitle("Back");
 
+        //setFavouriteButton(event.isFavourite());
         ImageView eventImage = (ImageView) findViewById(R.id.eventImage);
         if (event.getCoverUrl() != null) {
             Utils.loadImage(event.getCoverUrl(), eventImage, null);
@@ -87,7 +98,7 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
                 Calendar cal = new GregorianCalendar();
                 cal.setTime(event.getStartTime());
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis());
-                if (event.getEndTime()!=null) {
+                if (event.getEndTime() != null) {
                     cal.setTime(event.getEndTime());
                     intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.getTimeInMillis());
                 }
@@ -120,6 +131,61 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.event_menu, menu);
+
+        Log.d("LOZ", "create options menu, menu is "+menu.toString());
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        Log.d("LOZ", "on prepare options menu, menu is "+menu.toString());
+        setFavouriteButton(event.isFavourite(), menu);
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_favourite:
+                tappedFavouriteButton();
+                break;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return false;
+    }
+
+    private void tappedFavouriteButton() {
+        event.setFavourite(!event.isFavourite());
+        supportInvalidateOptionsMenu();
+    }
+
+    private void setFavouriteButton(boolean isFavourite, Menu menu) {
+        MenuItem favouriteMenuItem = menu.findItem(R.id.action_favourite);
+        if (isFavourite) {
+            favouriteMenuItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite_set));
+        } else {
+            favouriteMenuItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite_unset));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("LOZ", "**************** ON BACK PRESSED **************");
+        Intent returnIntent = getIntent();
+        Bundle b = new Bundle();
+        b.putSerializable("event", event);
+        returnIntent.putExtras(b);
+        setResult(RESULT_OK,returnIntent);
+        finish();
+    }
+
+    @Override
     public void onMapReady(final GoogleMap googleMap) {
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(event.getVenue().getLatitude(), event.getVenue().getLongitude()))
@@ -130,6 +196,7 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
                     public void permissionGranted() {
                         //permission granted
                         googleMap.setMyLocationEnabled(true);
+
                     }
 
                     @Override

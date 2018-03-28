@@ -4,13 +4,13 @@ android {
     signingConfigs {
         androidKey {
             keyAlias 'myandroidkey'
-            storeFile file('/Users/loz/Dropbox (Personal)/Android/keystore.jks')
+            storeFile file('/Users/loz/Library/Mobile Documents/com~apple~CloudDocs/From Dropbox/Android/keystore.jks')
             keyPassword 'happie'
             storePassword 'happie'
         }
     }
     compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -60,21 +60,20 @@ android {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:27.1.0'
-    compile 'com.android.support:recyclerview-v7:27.1.0'
-    compile 'com.android.support:design:27.1.0'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
-    compile 'com.google.android.gms:play-services-maps:12.0.0'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.google.firebase:firebase-appindexing:12.0.0'
-    compile 'com.auron:permission-manage:1.0.8'
-    compile('com.twitter.sdk.android:twitter:3.2.0@aar') {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    implementation 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
+    implementation 'com.google.android.gms:play-services-maps:12.0.0'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.google.firebase:firebase-appindexing:12.0.0'
+    implementation 'com.auron:permission-manage:1.0.8'
+    implementation('com.twitter.sdk.android:twitter:3.2.0@aar') {
         transitive = true
     }
-
-    compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2' // (v4.5)
+    implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    // (v4.5)
 }
 
