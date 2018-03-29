@@ -18,6 +18,7 @@ public class EventData implements Serializable {
     private VenueData venue;
     private String ticketUrl;
     private boolean isFavourite;
+    private int notificaitonId;
 
     public EventData() {
     }
@@ -128,5 +129,13 @@ public class EventData implements Serializable {
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
+    }
+
+    public int getNotificaitonId() {
+        return (int) (this.getStartTime().getTime() / 1000 / 60);
+    }
+
+    public void setNotificaitonId(int notificaitonId) {
+        this.notificaitonId = notificaitonId;
     }
 }

@@ -133,14 +133,11 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.event_menu, menu);
-
-        Log.d("LOZ", "create options menu, menu is "+menu.toString());
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        Log.d("LOZ", "on prepare options menu, menu is "+menu.toString());
         setFavouriteButton(event.isFavourite(), menu);
         super.onPrepareOptionsMenu(menu);
         return true;
@@ -176,7 +173,6 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
 
     @Override
     public void onBackPressed() {
-        Log.d("LOZ", "**************** ON BACK PRESSED **************");
         Intent returnIntent = getIntent();
         Bundle b = new Bundle();
         b.putSerializable("event", event);

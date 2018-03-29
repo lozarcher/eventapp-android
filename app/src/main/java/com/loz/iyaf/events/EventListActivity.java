@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class EventListActivity extends AppCompatActivity  {
     private EventList eventList;
     private Set<String> favourites;
     private static final int SHOW_EVENT_DETAIL = 0;
+    private boolean isFavouritesView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class EventListActivity extends AppCompatActivity  {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                @Override
                public void onTabSelected(TabLayout.Tab tab) {
+                   isFavouritesView = (tab.getPosition()==1);
                    processEventList(eventList);
                }
 
@@ -157,12 +160,6 @@ public class EventListActivity extends AppCompatActivity  {
                 map.put(dateAtMidnight, eventsOnDay);
             }
         }
-        for (Date date : map.keySet()) {
-            Log.d("Events for day", date.toString());
-            for (EventData event : map.get(date)) {
-                Log.d("Event", event.getName()+ " "+ event.getStartTime().toString());
-            }
-        }
         return map;
     }
 
@@ -179,48 +176,64 @@ public class EventListActivity extends AppCompatActivity  {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("LOZ","************************* Triggered onActivityResult in Event List");
         if (requestCode == SHOW_EVENT_DETAIL) {
             if (resultCode == RESULT_OK) {
                 Bundle b = data.getExtras();
                 EventData viewedEvent = (EventData) b.getSerializable("event");
                 if (viewedEvent != null) {
-                    if (viewedEvent.isFavourite()) {
-                        Log.d("LOZ", "Added favourite "+viewedEvent.getName());
-                        this.favourites.add(viewedEvent.getId().toString());
-                    } else {
-                        this.favourites.remove(viewedEvent.getId().toString());
+                    boolean favouritesChanged = amendEventList(viewedEvent);
+                    if (favouritesChanged)  {
+                        if (viewedEvent.isFavourite()) {
+                            Log.d("LOZ", "Added favourite "+viewedEvent.getName());
+                            this.favourites.add(viewedEvent.getId().toString());
+                            EventNotification.setNotification(viewedEvent, this);
+                        } else {
+                            this.favourites.remove(viewedEvent.getId().toString());
+                            EventNotification.removeNotification(viewedEvent, this);
+                        }
+                        saveFavourites();
+                        processEventList(eventList);
                     }
-                    amendEventList(viewedEvent);
-                    saveFavourites();
-
-                    processEventList(eventList);
                 }
-                Log.d("LOZ", "Back from detail view with event " + viewedEvent.getName());
             }
         }
     }
 
-    private void amendEventList(EventData amendedEvent) {
+    private boolean amendEventList(EventData amendedEvent) {
+        boolean favouritesChanged = false;
         for (EventData event : eventList.getData()) {
             if (event.getId().equals(amendedEvent.getId())) {
+                if (amendedEvent.isFavourite() != event.isFavourite()) {
+                    favouritesChanged = true;
+                }
                 event.setFavourite(amendedEvent.isFavourite());
             }
         }
+        return favouritesChanged;
     }
 
-
-    protected void setFavourite(View view, EventData event) {
-        event.setFavourite(!event.isFavourite());
+    public void setFavouriteIcon(ImageView icon, EventData event) {
         if (event.isFavourite()) {
-            ((TextView)view).setText("{fa-heart}");
-            this.favourites.add(event.getId().toString());
+            icon.setImageResource(R.drawable.ic_favorite_set);
         } else {
-            ((TextView)view).setText("{fa-heart-o}");
+            icon.setImageResource(R.drawable.ic_favorite_unset);
+        }
+    }
+
+    protected void setFavourite(ImageView view, EventData event) {
+        event.setFavourite(!event.isFavourite());
+        setFavouriteIcon(view, event);
+        if (event.isFavourite()) {
+            this.favourites.add(event.getId().toString());
+            EventNotification.setNotification(event, this);
+        } else {
             this.favourites.remove(event.getId().toString());
+            EventNotification.removeNotification(event, this);
         }
         saveFavourites();
-        processEventList(eventList);
+        if (isFavouritesView) {
+            processEventList(eventList);
+        }
     }
 
     private void readFavourites() {

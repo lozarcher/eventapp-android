@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
     <application
         android:name="com.loz.iyaf.Application"
         android:allowBackup="true"
@@ -21,6 +22,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDhFrxEFrZhH6JWDDyn85A_eVWsT0w_c1I" />
+
+        <receiver android:name="com.loz.iyaf.events.NotificationPublisher"></receiver>
 
         <activity android:name="com.loz.iyaf.mainmenu.MenuActivity"
             android:screenOrientation="portrait">

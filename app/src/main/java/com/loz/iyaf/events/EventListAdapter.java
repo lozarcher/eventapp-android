@@ -21,7 +21,7 @@ import java.util.TreeSet;
 
 public class EventListAdapter extends BaseAdapter {
 
-    private Activity activity;
+    private EventListActivity activity;
     private ArrayList<EventData> data = new ArrayList<>();
     private TreeSet<Integer> sectionHeader = new TreeSet<>();
     private static LayoutInflater inflater=null;
@@ -29,7 +29,7 @@ public class EventListAdapter extends BaseAdapter {
     private static final int TYPE_SEPARATOR = 1;
 
 
-    public EventListAdapter (Activity a) {
+    public EventListAdapter (EventListActivity a) {
         activity = a;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -85,20 +85,17 @@ public class EventListAdapter extends BaseAdapter {
                 TextView subtitle = (TextView) vi.findViewById(R.id.artist); // subtitle
                 ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image); // thumb image
 
-                TextView favouriteIcon = vi.findViewById(R.id.favouriteIcon); // thumb image
+                ImageView favouriteIcon = vi.findViewById(R.id.favouriteIcon); // thumb image
                 EventData event = data.get(position);
-                if (event.isFavourite()) {
-                    favouriteIcon.setText("{fa-heart}");
-                } else {
-                    favouriteIcon.setText("{fa-heart-o}");
-                }
+                activity.setFavouriteIcon(favouriteIcon, event);
+
                 favouriteIcon.setClickable(true);
 
                 favouriteIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Log.d("LOZ", "Clicked favourite");
-                        ((EventListActivity)activity).setFavourite(view, event);
+                        activity.setFavourite((ImageView)view, event);
                     }
                 });
 

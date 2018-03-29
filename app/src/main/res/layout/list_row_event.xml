@@ -57,29 +57,22 @@
         android:layout_toEndOf="@+id/thumbnail"
         android:text="12:00 @ Event Venue" />
 
-    <!-- Favourite -->
-    <com.joanzapata.iconify.widget.IconTextView
+    <ImageView
         android:id="@+id/favouriteIcon"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="{fa-heart-o}"
-        android:textSize="14sp"
+        android:layout_height="14dp"
+        android:layout_width="14dp"
+        android:src="@drawable/ic_favorite_unset"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         />
 
     <!-- Rightend Arrow -->
-    <com.joanzapata.iconify.widget.IconTextView
+    <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="{fa-chevron-right}"
-        android:textSize="14sp"
+        android:src="@drawable/arrow"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        />
-
-
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>
