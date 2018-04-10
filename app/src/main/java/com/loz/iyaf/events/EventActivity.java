@@ -89,26 +89,6 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
             mapFragment.getView().setVisibility(View.INVISIBLE);
         }
 
-        Button calendarButton = (Button) findViewById(R.id.calendarButton);
-        calendarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_EDIT);
-                intent.setType("vnd.android.cursor.item/event");
-                Calendar cal = new GregorianCalendar();
-                cal.setTime(event.getStartTime());
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis());
-                if (event.getEndTime() != null) {
-                    cal.setTime(event.getEndTime());
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.getTimeInMillis());
-                }
-                intent.putExtra(CalendarContract.Events.TITLE, event.getName());
-                intent.putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
-                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, event.getLocation());
-                startActivity(intent);
-            }
-        });
-
         Button ticketButton = (Button) findViewById(R.id.ticketButton);
         if (event.getTicketUrl() != null) {
             ticketButton.setOnClickListener(new View.OnClickListener() {
@@ -119,12 +99,6 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
                 }
             });
         } else {
-            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            p.addRule(RelativeLayout.BELOW, R.id.eventAbout);
-            p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            p.setMargins(0, Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getApplicationContext().getResources().getDisplayMetrics())), 0, 0);
-            calendarButton.setLayoutParams(p);
             ticketButton.setVisibility(View.INVISIBLE);
         }
 
@@ -183,6 +157,7 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
+        Log.d("LOZ", "Setting marker on map");
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(event.getVenue().getLatitude(), event.getVenue().getLongitude()))
                 .title(event.getLocation()));
@@ -191,6 +166,8 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
                     @Override
                     public void permissionGranted() {
                         //permission granted
+                        Log.d("LOZ", "Permission for user location granted");
+
                         googleMap.setMyLocationEnabled(true);
 
                     }
