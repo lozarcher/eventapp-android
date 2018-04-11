@@ -1,0 +1,13 @@
+<resources>
+    <dimen name="chopsticks_width">48dp</dimen>
+    <dimen name="knife_width">43.2dp</dimen>
+    <dimen name="fork_width">48dp</dimen>
+    <dimen name="fork_height">132dp</dimen>
+    <dimen name="plate_size">156dp</dimen>
+    <dimen name="knife_height">144dp</dimen>
+    <dimen name="chopsticks_height">144dp</dimen>
+    <dimen name="spoon_width">48dp</dimen>
+    <dimen name="spoon_height">144dp</dimen>
+    <dimen name="teaspoon_width">93.6dp</dimen>
+    <dimen name="teaspoon_height">93.6dp</dimen>
+</resources>

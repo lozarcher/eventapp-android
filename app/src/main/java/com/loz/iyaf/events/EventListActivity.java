@@ -119,6 +119,7 @@ public class EventListActivity extends AppCompatActivity  {
         for (EventData event : eventList.getData()) {
             events.add(event);
             eventNames.add(event.getName());
+            Log.d("LOZ", "Got event "+event.getName());
         }
         ListView listView = (ListView)findViewById(R.id.listView);
 
