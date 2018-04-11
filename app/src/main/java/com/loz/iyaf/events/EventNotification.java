@@ -27,9 +27,11 @@ class EventNotification {
     private static final String NOTIFICATION_TITLE = "Event starting soon";
     private static final String NOTIFICATION_TEXT_FORMAT = "%s will be starting at %s";
 
+    private static final Long MILLIS_BEFORE_EVENT_NOTIFICATION = 3600000L;
+
     protected static void setNotification(EventData event, EventListActivity activity) {
         createChannel(activity);
-        scheduleNotification(getNotification(activity, event), 10000, activity, event);
+        scheduleNotification(getNotification(activity, event), activity, event);
 
     }
 
@@ -41,11 +43,11 @@ class EventNotification {
     }
 
 
-    private static void scheduleNotification(Notification notification, int delay, Activity activity, EventData event) {
+    private static void scheduleNotification(Notification notification, Activity activity, EventData event) {
 
         PendingIntent pendingIntent = getIntent(activity, notification, event);
 
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        long futureInMillis = event.getStartTime().getTime() - MILLIS_BEFORE_EVENT_NOTIFICATION;
         AlarmManager alarmManager = (AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
@@ -62,27 +64,6 @@ class EventNotification {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, event.getNotificaitonId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         return pendingIntent;
-
-//        Intent intent = new Intent (activity, MenuActivity.class);
-//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
-//        stackBuilder.addParentStack(MenuActivity.class);
-//        stackBuilder.addNextIntent(intent);
-//        Intent intentEventView = new Intent (activity, EventListActivity.class);
-//        //intentEmailView.putExtra("EmailId","you can Pass emailId here");
-//        stackBuilder.addNextIntent(intentEventView);
-//        intentEventView.setClass(activity, NotificationPublisher.class);
-//        intentEventView.putExtra(NotificationPublisher.NOTIFICATION_ID, event.getNotificaitonId());
-//        intentEventView.putExtra(NotificationPublisher.NOTIFICATION, notification);
-//        stackBuilder.addNextIntent(intentEventView);
-//        Intent stackBuilderIntent =
-//                stackBuilder.getPendingIntent(
-//                        event.getNotificaitonId(),
-//                        .FLAG_UPDATE_CURRENT
-//                );
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, event.getNotificaitonId(), intentEventView, PendingIntent.FLAG_UPDATE_CURRENT);
-//        PendingIntent.getBroadcast()
-//
-//        return resultingIntent;
     }
 
     private static Notification getNotification(Activity activity, EventData event) {
