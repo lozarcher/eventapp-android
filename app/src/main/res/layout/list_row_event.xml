@@ -7,27 +7,43 @@
     android:padding="10dip" >
 
     <!--  ListRow Left Thumbnail image -->
-    <LinearLayout android:id="@+id/thumbnail"
+    <RelativeLayout android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/list_image"
-            android:layout_width="80dip"
-            android:layout_height="80dip"/>
+        <com.tomerrosenfeld.customanalogclockview.CustomAnalogClock
+            android:id="@+id/analog_clock"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/eventTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#343434"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:typeface="normal"
+            android:layout_marginTop="1dip"
+            android:layout_below="@+id/analog_clock"
+            android:layout_centerHorizontal="true"
+            android:text="12:00" />
+    </RelativeLayout>
 
+    <!--  ListRow Left Thumbnail image -->
+    <RelativeLayout android:id="@+id/eventDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:orientation="vertical">
     <!-- Title -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:layout_toEndOf="@+id/thumbnail"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
         android:paddingEnd="40dp"
@@ -36,7 +52,7 @@
         android:textColor="#040404"
         android:typeface="normal"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <!-- Summary -->
     <TextView
@@ -53,22 +69,19 @@
         android:paddingLeft="20dp"
         android:paddingEnd="40dp"
         android:paddingRight="40dp"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:layout_toEndOf="@+id/thumbnail"
         android:text="12:00 @ Event Venue" />
-
+    </RelativeLayout>
     <ImageView
         android:id="@+id/favouriteIcon"
-        android:layout_height="14dp"
-        android:layout_width="14dp"
-        android:src="@drawable/ic_favorite_unset"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        />
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/rightArrow"
+        android:src="@drawable/ic_favorite_unset" />
 
     <!-- Rightend Arrow -->
     <ImageView android:layout_width="wrap_content"
+        android:id="@+id/rightArrow"
         android:layout_height="wrap_content"
         android:src="@drawable/arrow"
         android:layout_alignParentRight="true"

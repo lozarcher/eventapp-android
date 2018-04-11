@@ -1,6 +1,5 @@
 package com.loz.iyaf.events;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import com.loz.R;
 import com.loz.iyaf.feed.EventData;
-import com.loz.iyaf.imagehelpers.Utils;
+import com.tomerrosenfeld.customanalogclockview.CustomAnalogClock;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -83,7 +82,6 @@ public class EventListAdapter extends BaseAdapter {
                     vi = inflater.inflate(R.layout.list_row_event, null);
                 TextView title = (TextView) vi.findViewById(R.id.title); // title
                 TextView subtitle = (TextView) vi.findViewById(R.id.artist); // subtitle
-                ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image); // thumb image
 
                 ImageView favouriteIcon = vi.findViewById(R.id.favouriteIcon); // thumb image
                 EventData event = data.get(position);
@@ -104,10 +102,17 @@ public class EventListAdapter extends BaseAdapter {
                 title.setText(event.getName());
                 Calendar startTime = GregorianCalendar.getInstance();
                 startTime.setTime(event.getStartTime());
-                String startTimeStr = String.format("%02d:%02d", startTime.get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.MINUTE));
 
-                subtitle.setText(startTimeStr + " @ " + event.getLocation());
-                Utils.loadImage(event.getProfileUrl(), thumb_image, null);
+                CustomAnalogClock clock = vi.findViewById(R.id.analog_clock);
+                clock.init(activity, R.drawable.clock_face, R.drawable.clock_hourhand, R.drawable.clock_minutehand, 0, false, false);
+
+                clock.setAutoUpdate(false);
+                clock.setTime(startTime);
+                clock.setScale(0.2f);
+
+                TextView eventTime = vi.findViewById(R.id.eventTime);
+                eventTime.setText(String.format("%02d:%02d", startTime.get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.MINUTE)));
+                subtitle.setText(event.getLocation());
                 break;
             case TYPE_SEPARATOR:
                 if (convertView == null)
