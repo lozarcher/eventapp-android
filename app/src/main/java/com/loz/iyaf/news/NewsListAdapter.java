@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.loz.iyaf.feed.NewsData;
 import com.loz.iyaf.imagehelpers.Utils;
 import com.loz.R;
-import com.twitter.Regex;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,12 +84,7 @@ public class NewsListAdapter extends BaseAdapter {
         String link = newsItem.getName();
         final String linkUrl = newsItem.getLink();
 
-        Pattern facebookImagePattern =
-                Pattern.compile("http.*www\\.facebook\\.com.*\\/photos\\/");
-        Matcher facebookImageMatch = facebookImagePattern.matcher(linkUrl);
-
-        Log.d("LOZ", "Matches "+facebookImageMatch.matches()+" "+linkUrl);
-        if ((linkUrl != null) && !facebookImageMatch.matches()) {
+        if ((linkUrl != null) && (!linkUrl.matches("http.*facebook\\.com\\/.*photos.*"))) {
             newsLink.setVisibility(View.VISIBLE);
             if (link == null) {
                 link = linkUrl;
