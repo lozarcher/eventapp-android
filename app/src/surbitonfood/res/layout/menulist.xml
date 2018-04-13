@@ -6,13 +6,14 @@
     android:paddingBottom="0dp"
     android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:id="@+id/menuImage"
         android:layout_gravity="center_horizontal"
-        android:layout_width="@dimen/plate_size"
-        android:layout_height="@dimen/plate_size"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="-10dp"
         android:layout_marginBottom="-10dp"
         android:paddingTop="0dp"
@@ -24,7 +25,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16dip"
+        android:textSize="0dp"
         android:textStyle="bold"
         android:layout_centerInParent="true"
         android:text="TextView"
@@ -33,8 +34,8 @@
 
     <ImageView
         android:id="@+id/spoonImage"
-        android:layout_width="@dimen/spoon_width"
-        android:layout_height="@dimen/spoon_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="-20dp"
         android:layout_centerVertical="true"
         android:src="@drawable/cutlery_spoon"
@@ -43,8 +44,8 @@
 
     <ImageView
         android:id="@+id/chopsticksImage"
-        android:layout_width="@dimen/chopsticks_width"
-        android:layout_height="@dimen/chopsticks_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="-20dp"
         android:layout_centerVertical="true"
         android:src="@drawable/cutlery_chopsticks"
@@ -53,8 +54,8 @@
 
     <ImageView
         android:id="@+id/forkImage"
-        android:layout_width="@dimen/fork_width"
-        android:layout_height="@dimen/fork_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/cutlery_fork"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/menuImage"
@@ -66,8 +67,8 @@
 
     <ImageView
         android:id="@+id/knifeImage"
-        android:layout_width="@dimen/knife_width"
-        android:layout_height="@dimen/knife_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="-30dp"
         android:layout_centerVertical="true"
         android:src="@drawable/cutlery_knife"
@@ -77,8 +78,8 @@
 
     <ImageView
         android:id="@+id/teaspoonImage"
-        android:layout_width="@dimen/teaspoon_width"
-        android:layout_height="@dimen/teaspoon_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/cutlery_teaspoon"
         android:visibility="visible"
         android:layout_marginLeft="-90dp"

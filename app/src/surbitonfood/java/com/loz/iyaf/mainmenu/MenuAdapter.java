@@ -1,15 +1,22 @@
 package com.loz.iyaf.mainmenu;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.loz.R;
 import com.loz.iyaf.imagehelpers.Utils;
+
+import static android.content.Context.WINDOW_SERVICE;
 
 public class MenuAdapter extends BaseAdapter {
     private Context mContext;
@@ -58,8 +65,18 @@ public class MenuAdapter extends BaseAdapter {
         holder.knifeImg = (ImageView) rowView.findViewById(R.id.knifeImage);
         holder.forkImg = (ImageView) rowView.findViewById(R.id.forkImage);
 
+        Double imageWidth = getScreenSizeInPixels(mContext).widthPixels/2.3;
+        Double imageHeight = getScreenSizeInPixels(mContext).heightPixels/5.0;
+
+        Double imageReferenceSize = (imageWidth < imageHeight) ? imageWidth : imageHeight;
         holder.img.setPadding(0,0,0,0);
+        setPlateLayout(holder.img, imageReferenceSize, imageReferenceSize);
+
+
+
         Utils.loadImage("drawable://"+mThumbIds[position], holder.img, null);
+
+        holder.tv.setTextSize(convertPixelsToDp((float)(imageReferenceSize/9), mContext));
         holder.tv.setText(labels[position]);
 
         holder.forkImg.setVisibility(View.INVISIBLE);
@@ -69,27 +86,75 @@ public class MenuAdapter extends BaseAdapter {
         holder.chopsticksImg.setVisibility(View.INVISIBLE);
 
         switch (position) {
-            case 1:
+            case 1: // KNIFE AND FORK
+                //setImageLayout(holder.forkImg, imageReferenceSize*0.3, imageReferenceSize*1.1, 0.0, 0.0, imageReferenceSize*-0.3, 0.0, false);
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.width=(int)(imageReferenceSize*0.3);
+                lp.height=(int)(imageReferenceSize*0.9);
+                lp.setMargins(0, 0, (int)(imageReferenceSize*-0.2), 0);
+                lp.addRule(RelativeLayout.LEFT_OF, R.id.menuImage);
+                lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+                holder.forkImg.setLayoutParams(lp);
                 Utils.loadImage("drawable://"+R.id.forkImage, holder.forkImg, null);
                 holder.forkImg.setVisibility(View.VISIBLE);
+
+                lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.width=(int)(imageReferenceSize*0.2);
+                lp.height=(int)(imageReferenceSize*1.0);
+                lp.setMargins((int)(imageReferenceSize*-0.15), 0, 0, 0);
+                lp.addRule(RelativeLayout.RIGHT_OF, R.id.menuImage);
+                lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+                holder.knifeImg.setLayoutParams(lp);
                 Utils.loadImage("drawable://" + R.id.knifeImage, holder.knifeImg, null);
                 holder.knifeImg.setVisibility(View.VISIBLE);
                 break;
-            case 2:
+            case 2: // TEASPOON
                 Utils.loadImage("drawable://" + R.id.teaspoonImage, holder.teaspoonImg, null);
                 holder.teaspoonImg.setVisibility(View.VISIBLE);
+                lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.width=(int)(imageReferenceSize*0.6);
+                lp.height=(int)(imageReferenceSize*0.6);
+                lp.setMargins((int)(imageReferenceSize*-0.8), (int)(imageReferenceSize*0.05), 0, 0);
+                lp.addRule(RelativeLayout.RIGHT_OF, R.id.menuImage);
+                lp.addRule(RelativeLayout.ALIGN_TOP, R.id.menuImage);
+                lp.addRule(RelativeLayout.ALIGN_RIGHT, R.id.menuImage);
+                holder.teaspoonImg.setLayoutParams(lp);
                 break;
-            case 4:
+            case 4: // SPOON
+                lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.width=(int)(imageReferenceSize*0.3);
+                lp.height=(int)(imageReferenceSize*1.0);
+                lp.setMargins((int)(imageReferenceSize*-0.1), 0, 0, 0);
+                lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+                lp.addRule(RelativeLayout.RIGHT_OF, R.id.menuImage);
+                holder.spoonImg.setLayoutParams(lp);
                 Utils.loadImage("drawable://" + R.id.spoonImage, holder.spoonImg, null);
                 holder.spoonImg.setVisibility(View.VISIBLE);
                 break;
-            case 5:
+            case 5:  // CHOPSTICKS
+                lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.width=(int)(imageReferenceSize*0.3);
+                lp.height=(int)(imageReferenceSize*0.9);
+                lp.setMargins((int)(imageReferenceSize*-0.1), 0, 0, 0);
+                lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+                lp.addRule(RelativeLayout.RIGHT_OF, R.id.menuImage);
+                holder.chopsticksImg.setLayoutParams(lp);
                 Utils.loadImage("drawable://" + R.id.chopsticksImage, holder.chopsticksImg, null);
                 holder.chopsticksImg.setVisibility(View.VISIBLE);
                 break;
         }
 
         return rowView;
+    }
+
+
+    private void setPlateLayout(ImageView image, Double width, Double height) {
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.width=width.intValue();
+        lp.height=height.intValue();
+
+        lp.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        image.setLayoutParams(lp);
     }
 
     // references to our images
@@ -105,5 +170,19 @@ public class MenuAdapter extends BaseAdapter {
             "News", "Traders",
             "Get\nInvolved", "Twitter"
     };
+
+    protected static DisplayMetrics getScreenSizeInPixels(Context context){
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        return dm;
+    }
+
+    public static float convertPixelsToDp(float px, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
 
 }

@@ -38,7 +38,7 @@ android {
         surbitonfood {
             dimension "app"
             applicationId "com.loz"
-            applicationIdSuffix ".surbitonfood"
+            applicationIdSuffix ".surbitonfoodfestival"
             minSdkVersion 16
             targetSdkVersion 27
             versionCode 7
