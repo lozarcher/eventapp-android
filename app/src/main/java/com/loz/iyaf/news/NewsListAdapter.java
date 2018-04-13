@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,13 @@ import android.widget.TextView;
 import com.loz.iyaf.feed.NewsData;
 import com.loz.iyaf.imagehelpers.Utils;
 import com.loz.R;
+import com.twitter.Regex;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NewsListAdapter extends BaseAdapter {
 
@@ -81,7 +85,12 @@ public class NewsListAdapter extends BaseAdapter {
         String link = newsItem.getName();
         final String linkUrl = newsItem.getLink();
 
-        if (linkUrl != null) {
+        Pattern facebookImagePattern =
+                Pattern.compile("http.*www\\.facebook\\.com.*\\/photos\\/");
+        Matcher facebookImageMatch = facebookImagePattern.matcher(linkUrl);
+
+        Log.d("LOZ", "Matches "+facebookImageMatch.matches()+" "+linkUrl);
+        if ((linkUrl != null) && !facebookImageMatch.matches()) {
             newsLink.setVisibility(View.VISIBLE);
             if (link == null) {
                 link = linkUrl;

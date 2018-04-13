@@ -267,7 +267,8 @@ public class EventListActivity extends AppCompatActivity  {
     }
 
     private boolean shouldShowEvent(EventData eventData) {
-        if (isFavouritesSelected()) {
+        //if (isFavouritesSelected()) {
+        if (isFavouritesView) {
             return eventData.isFavourite();
         } else {
             return true;

@@ -46,8 +46,8 @@
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
-        android:paddingEnd="40dp"
-        android:paddingRight="40dp"
+        android:paddingEnd="50dp"
+        android:paddingRight="50dp"
         android:text="Event Title"
         android:textColor="#040404"
         android:typeface="normal"
@@ -67,8 +67,8 @@
         android:layout_marginTop="1dip"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
-        android:paddingEnd="40dp"
-        android:paddingRight="40dp"
+        android:paddingEnd="50dp"
+        android:paddingRight="50dp"
         android:text="12:00 @ Event Venue" />
     </RelativeLayout>
     <ImageView
