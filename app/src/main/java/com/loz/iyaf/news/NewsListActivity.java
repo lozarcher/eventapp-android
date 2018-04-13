@@ -3,11 +3,13 @@ package com.loz.iyaf.news;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.loz.iyaf.feed.NewsData;
 import com.loz.R;
@@ -42,12 +44,17 @@ public class NewsListActivity extends AppCompatActivity  {
 
         setContentView(R.layout.activity_newslist);
 
+        listView = findViewById(R.id.listView);
+        TextView emptyList = findViewById(R.id.emptyList);
+        listView.setEmptyView(emptyList);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://eventapp.lozarcher.co.uk")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
         eventappService = retrofit.create(EventappService.class);
 
+        spinner(true);
         Call<NewsList> call = eventappService.getNews();
         Log.d("LOZ", "Starting call to /posts... Hope it works...");
         call.enqueue(new Callback<NewsList>() {
@@ -57,6 +64,7 @@ public class NewsListActivity extends AppCompatActivity  {
 
                 NewsList newsList = response.body();
                 JsonCache.writeToCache(getApplicationContext(), newsList, "news");
+                spinner(false);
                 processNewsList(newsList);
             }
 
@@ -64,6 +72,7 @@ public class NewsListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                spinner(false);
                 NewsList newsList = null;
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "news");
                 if (oi != null) {
@@ -81,6 +90,13 @@ public class NewsListActivity extends AppCompatActivity  {
 
             }
         });
+    }
+
+    @UiThread
+    void spinner(boolean show){
+        findViewById(R.id.listView).setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        findViewById(R.id.emptyList).setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        findViewById(R.id.spinner).setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void processNewsList(NewsList newsList) {

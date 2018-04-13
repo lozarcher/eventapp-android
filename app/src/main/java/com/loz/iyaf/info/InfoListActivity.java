@@ -2,11 +2,13 @@ package com.loz.iyaf.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.loz.iyaf.feed.EventappService;
 import com.loz.R;
@@ -33,6 +35,10 @@ public class InfoListActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traderlist);
 
+        ListView listView = findViewById(R.id.listView);
+        TextView emptyList = findViewById(R.id.emptyList);
+        listView.setEmptyView(emptyList);
+
         String infoTitle = getString(R.string.info_title);
         if (infoTitle == null) {
             infoTitle = "Info";
@@ -47,6 +53,7 @@ public class InfoListActivity extends AppCompatActivity  {
         EventappService eventappService = retrofit.create(EventappService.class);
         Call<InfoList> call = eventappService.getInfo();
         Log.d("LOZ", "Starting call to /info... Hope it works...");
+        spinner(true);
         call.enqueue(new Callback<InfoList>() {
             @Override
             public void onResponse(Response<InfoList> response, Retrofit retrofit) {
@@ -54,6 +61,7 @@ public class InfoListActivity extends AppCompatActivity  {
 
                 InfoList infoList = response.body();
                 JsonCache.writeToCache(getApplicationContext(), infoList, "info");
+                spinner(false);
                 processInfoList(infoList);
             }
 
@@ -61,6 +69,7 @@ public class InfoListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                spinner(false);
                 InfoList infoList = null;
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "info");
                 if (oi != null) {
@@ -76,6 +85,13 @@ public class InfoListActivity extends AppCompatActivity  {
                 }
             }
         });
+    }
+
+    @UiThread
+    void spinner(boolean show){
+        findViewById(R.id.listView).setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        findViewById(R.id.emptyList).setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        findViewById(R.id.spinner).setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void processInfoList(InfoList infoList) {

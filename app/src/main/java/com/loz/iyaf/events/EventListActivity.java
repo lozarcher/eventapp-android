@@ -1,17 +1,20 @@
 package com.loz.iyaf.events;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.loz.iyaf.feed.EventData;
@@ -51,8 +54,9 @@ public class EventListActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventlist);
 
-        ListView listView = (ListView)findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         TextView emptyList = findViewById(R.id.emptyList);
+
         listView.setEmptyView(emptyList);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -60,11 +64,17 @@ public class EventListActivity extends AppCompatActivity  {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                @Override
                public void onTabSelected(TabLayout.Tab tab) {
                    isFavouritesView = (tab.getPosition()==1);
+                   if (isFavouritesView) {
+                       emptyList.setText(R.string.emptyFavouritesList);
+                   } else {
+                       emptyList.setText(R.string.emptyEventsList);
+
+                   }
                    processEventList(eventList);
                }
 
@@ -82,14 +92,15 @@ public class EventListActivity extends AppCompatActivity  {
         EventappService eventappService = retrofit.create(EventappService.class);
         Call<EventList> call = eventappService.getEvents();
         Log.d("LOZ", "Starting call to /events... Hope it works...");
+        spinner(true);
         call.enqueue(new Callback<EventList>() {
             @Override
             public void onResponse(Response<EventList> response, Retrofit retrofit) {
                 Log.d("LOZ", "Got response: "+response.body().toString());
-
                 eventList = response.body();
                 JsonCache.writeToCache(getApplicationContext(), eventList, "events");
                 readFavourites();
+                spinner(false);
                 processEventList(eventList);
             }
 
@@ -97,6 +108,7 @@ public class EventListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                spinner(false);
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "events");
                 if (oi != null) {
                     try {
@@ -105,36 +117,44 @@ public class EventListActivity extends AppCompatActivity  {
                         e.printStackTrace();
                         Log.e("cache", e.getMessage());
                     }
-                    if (eventList != null) {
-                        processEventList(eventList);
-                    }
+                    processEventList(eventList);
                 }
             }
         });
    }
 
+    @UiThread
+    void spinner(boolean show){
+        findViewById(R.id.listView).setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        findViewById(R.id.emptyList).setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        findViewById(R.id.spinner).setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    }
+
+
     private void processEventList(EventList eventList) {
-        ArrayList<String> eventNames = new ArrayList<>();
-        ArrayList<EventData> events = new ArrayList<>();
-        for (EventData event : eventList.getData()) {
-            events.add(event);
-            eventNames.add(event.getName());
-            Log.d("LOZ", "Got event "+event.getName());
-        }
-        ListView listView = (ListView)findViewById(R.id.listView);
+        if (eventList != null) {
+            ArrayList<String> eventNames = new ArrayList<>();
+            ArrayList<EventData> events = new ArrayList<>();
+            for (EventData event : eventList.getData()) {
+                events.add(event);
+                eventNames.add(event.getName());
+                Log.d("LOZ", "Got event " + event.getName());
+            }
+            ListView listView = findViewById(R.id.listView);
 
-        EventListAdapter adapter = new EventListAdapter(EventListActivity.this);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(mEventClickedHandler);
+            EventListAdapter adapter = new EventListAdapter(EventListActivity.this);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(mEventClickedHandler);
 
-        TreeMap<Date, ArrayList<EventData>> map = getEventsByDay(events);
-        for (Date date : map.keySet()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE d MMMM yyyy");
-            eventRows.add(new EventData());
-            adapter.addSectionHeaderItem(sdf.format(date));
-            for (EventData event : map.get(date)) {
-                adapter.addItem(event);
-                eventRows.add(event);
+            TreeMap<Date, ArrayList<EventData>> map = getEventsByDay(events);
+            for (Date date : map.keySet()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE d MMMM yyyy");
+                eventRows.add(new EventData());
+                adapter.addSectionHeaderItem(sdf.format(date));
+                for (EventData event : map.get(date)) {
+                    adapter.addItem(event);
+                    eventRows.add(event);
+                }
             }
         }
     }
