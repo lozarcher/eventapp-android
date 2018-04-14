@@ -1,6 +1,5 @@
 package com.loz.iyaf.events;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,11 +9,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.loz.iyaf.feed.EventData;
@@ -186,14 +183,16 @@ public class EventListActivity extends AppCompatActivity  {
 
     private AdapterView.OnItemClickListener mEventClickedHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView parent, View v, int position, long id) {
+            EventData event = (EventData)parent.getAdapter().getItem(position);
             Intent intent = new Intent(EventListActivity.this, EventActivity.class);
             Bundle b = new Bundle();
-            b.putSerializable("event", eventRows.get(position));
-            intent.putExtras(b);
-            startActivityForResult(intent, SHOW_EVENT_DETAIL);
+            if (event != null) {
+                b.putSerializable("event", event);
+                intent.putExtras(b);
+                startActivityForResult(intent, SHOW_EVENT_DETAIL);
+            }
         }
     };
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
