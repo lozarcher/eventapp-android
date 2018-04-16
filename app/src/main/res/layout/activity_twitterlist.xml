@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:gravity="center_horizontal"
+        android:visibility="invisible"
         android:text="No tweets have been posted recently"/>
 
     <ListView
