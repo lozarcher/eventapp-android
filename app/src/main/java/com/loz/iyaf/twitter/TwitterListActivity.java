@@ -2,13 +2,10 @@ package com.loz.iyaf.twitter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.loz.R;
-import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
@@ -36,7 +33,9 @@ public class TwitterListActivity extends AppCompatActivity {
             final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
                     .setTimeline(searchTimeLine)
                     .build();
-            showUi(adapter);
+            runOnUiThread(() -> {
+                showUi(adapter);
+            });
         }).start();
     }
 
