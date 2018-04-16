@@ -6,13 +6,11 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -23,19 +21,19 @@ import com.loz.iyaf.mainmenu.MenuActivity;
 import java.text.SimpleDateFormat;
 
 
-class EventNotification {
+public class EventNotification {
     private static final String NOTIFICATION_TITLE = "Event starting soon";
     private static final String NOTIFICATION_TEXT_FORMAT = "%s will be starting at %s";
 
     private static final Long MILLIS_BEFORE_EVENT_NOTIFICATION = 3600000L;
 
-    protected static void setNotification(EventData event, EventListActivity activity) {
+    public static void setNotification(EventData event, Activity activity) {
         createChannel(activity);
         scheduleNotification(getNotification(activity, event), activity, event);
 
     }
 
-    protected static void removeNotification(EventData event, EventListActivity activity) {
+    public static void removeNotification(EventData event, Activity activity) {
         Log.d("LOZ", "Removing notification "+event.getName()+" "+event.getNotificaitonId());
         PendingIntent pendingIntent = getIntent(activity, getNotification(activity, event), event);
         AlarmManager manager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);

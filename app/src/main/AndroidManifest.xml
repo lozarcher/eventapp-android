@@ -46,6 +46,17 @@
                 android:value="com.loz.iyaf.mainmenu.MenuActivity" />
         </activity>
         <activity
+            android:name="com.loz.surbitonfood.events.EventListActivity"
+            android:label="Events"
+            android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
+            android:theme="@style/Theme.AppCompat.Light">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loz.iyaf.mainmenu.MenuActivity" />
+        </activity>
+        <activity
             android:name="com.loz.iyaf.news.NewsListActivity"
             android:label="News"
             android:parentActivityName="com.loz.iyaf.mainmenu.MenuActivity"
@@ -67,30 +78,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.loz.iyaf.mainmenu.MenuActivity" />
         </activity>
-        <!--<activity-->
-            <!--android:name=".vouchers.VoucherListActivity"-->
-            <!--android:label="Vouchers"-->
-            <!--android:parentActivityName=".mainmenu.MenuActivity"-->
-            <!--android:theme="@style/Theme.AppCompat.Light">-->
-
-            <!--&lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value=".mainmenu.MenuActivity" />-->
-        <!--</activity>-->
-        <!--<activity-->
-            <!--android:name=".vouchers.VoucherActivity"-->
-            <!--android:configChanges="orientation|keyboardHidden"-->
-            <!--android:label="Voucher"-->
-            <!--android:parentActivityName=".vouchers.VoucherListActivity"-->
-            <!--android:screenOrientation="landscape"-->
-            <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar">-->
-
-            <!--&lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value=".vouchers.VoucherListActivity" />-->
-        <!--</activity>-->
         <activity
             android:name="com.loz.iyaf.traders.TraderListActivity"
             android:label="Performers"

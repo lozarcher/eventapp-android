@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.loz.iyaf.events.EventListActivity;
+import com.loz.surbitonfood.events.EventListActivity;
 import com.loz.iyaf.gallery.GalleryActivity;
 import com.loz.iyaf.info.InfoListActivity;
 import com.loz.iyaf.news.NewsListActivity;
