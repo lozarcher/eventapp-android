@@ -42,7 +42,7 @@
         android:typeface="normal"
         android:textSize="14sp"
         android:textStyle="normal"
-        android:autoLink="all"
+        android:autoLink="web|email"
         android:layout_marginTop="6dp"
         android:layout_below="@+id/newsImage"
         android:layout_alignParentLeft="true"
