@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.loz.BuildConfig;
 import com.loz.iyaf.feed.GalleryData;
 import com.loz.iyaf.imagehelpers.JsonCache;
 import com.loz.R;
@@ -141,8 +143,11 @@ public class GalleryActivity extends ActivityManagePermission {
                                     //permission granted
                                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     try {
+                                        Uri fileUri = FileProvider.getUriForFile(getApplicationContext(),
+                                                BuildConfig.APPLICATION_ID + ".provider",
+                                                createImageFile());
                                         intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                                Uri.fromFile(createImageFile()));
+                                                fileUri);
                                         startActivityForResult(intent, REQUEST_CAMERA);
                                     } catch (IOException e) {
                                         Toast.makeText(getApplicationContext(),
