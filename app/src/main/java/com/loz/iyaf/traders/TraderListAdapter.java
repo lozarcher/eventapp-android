@@ -55,6 +55,6 @@ public class TraderListAdapter extends BaseAdapter {
 
         // Setting all values in listview
         title.setText(trader.getName());
-        Utils.loadImage(trader.getProfileImg(), thumb_image, null, 0);
+        Utils.loadImage(trader.getProfileImg(), thumb_image, null, 10);
         return vi;    }
 }
