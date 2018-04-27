@@ -3,6 +3,7 @@ package com.loz.iyaf.mainmenu;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.hardware.display.DisplayManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -28,6 +29,8 @@ import java.util.HashMap;
 
 public class MenuActivity extends AppCompatActivity {
 
+    private static final double TOP_MARGIN_PROPORTION_FOR_MENU = 0.4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -43,6 +46,8 @@ public class MenuActivity extends AppCompatActivity {
 
         GridView gridview = findViewById(R.id.gridView);
         gridview.setAdapter(new MenuAdapter(this));
+
+        setTopMarginOfMenu(gridview);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -96,9 +101,14 @@ public class MenuActivity extends AppCompatActivity {
         ImageLoader.getInstance().init(config);
     }
 
-    private int backgroundImageForScreenSize() {
+    private DisplayMetrics getDisplayMetrics() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
+    }
+
+    private int backgroundImageForScreenSize() {
+        DisplayMetrics displayMetrics = getDisplayMetrics();
 
         HashMap<Float, Integer> backgroundImages = new HashMap<>();
         backgroundImages.put(0.444f, R.drawable.app_background_0444);
@@ -127,6 +137,14 @@ public class MenuActivity extends AppCompatActivity {
         Log.d("LOZ", "Best image : "+ bestImageFile);
 
         return bestImageFile;
+    }
+
+    private void setTopMarginOfMenu(GridView gridView) {
+        DisplayMetrics displayMetrics = getDisplayMetrics();
+        RelativeLayout.LayoutParams gridLayout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        double topMargin = Math.abs(displayMetrics.heightPixels*TOP_MARGIN_PROPORTION_FOR_MENU);
+        gridLayout.setMargins(0,(int)topMargin, 0,0);
+        gridView.setLayoutParams(gridLayout);
     }
 
 }
