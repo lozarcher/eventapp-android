@@ -167,6 +167,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.loz.iyaf.traders.TraderListActivity" />
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f33e96542099ca70ea2f9d5bc4ecb316653b3e9f"
+            />
     </application>
 
 </manifest>

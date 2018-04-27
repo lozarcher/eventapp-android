@@ -3,6 +3,8 @@ package com.loz.iyaf.imagehelpers;
 import android.content.Context;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,6 +28,7 @@ public class JsonCache {
             output.close();
         } catch (IOException e) {
             Log.e("cache", e.getMessage());
+            Crashlytics.logException(e);
         }
     }
 
@@ -39,6 +42,7 @@ public class JsonCache {
         } catch (Exception e) {
             Log.e("cache", "Cannot read file "+filename);
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return null;
     }

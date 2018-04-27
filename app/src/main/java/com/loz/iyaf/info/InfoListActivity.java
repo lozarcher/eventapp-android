@@ -10,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.iyaf.feed.EventappService;
 import com.loz.R;
 import com.loz.iyaf.feed.InfoData;
@@ -69,6 +72,7 @@ public class InfoListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                Crashlytics.logException(t);
                 spinner(false);
                 InfoList infoList = null;
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "info");
@@ -78,6 +82,7 @@ public class InfoListActivity extends AppCompatActivity  {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("cache", e.getMessage());
+                        Crashlytics.logException(e);
                     }
                     if (infoList != null) {
                         processInfoList(infoList);
@@ -85,6 +90,10 @@ public class InfoListActivity extends AppCompatActivity  {
                 }
             }
         });
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Info List View")
+                .putContentType("Info List")
+                .putContentId("infolist"));
     }
 
     @UiThread

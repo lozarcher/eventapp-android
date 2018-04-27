@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.iyaf.feed.InfoData;
 import com.loz.iyaf.imagehelpers.Utils;
 import com.loz.R;
@@ -30,6 +32,10 @@ public class InfoActivity extends AppCompatActivity {
         infoTitle.setText(info.getTitle());
         TextView infoContent = (TextView) findViewById(R.id.infoContent);
         infoContent.setText(info.getContent());
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName(info.getTitle())
+                .putContentType("Info List")
+                .putContentId(String.valueOf(info.getId())));
     }
 
 }

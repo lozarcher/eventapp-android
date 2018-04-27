@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.surbitonfood.events.EventListActivity;
 import com.loz.iyaf.gallery.GalleryActivity;
 import com.loz.iyaf.info.InfoListActivity;
@@ -67,7 +69,10 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
         });
-
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Home View")
+                .putContentType("Home View")
+                .putContentId("home"));
     }
 
     public static void initImageLoader(Context context) {

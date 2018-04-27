@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.iyaf.imagehelpers.Utils;
 import com.loz.R;
 import com.loz.iyaf.feed.TraderData;
@@ -86,6 +88,9 @@ public class TraderActivity extends AppCompatActivity {
         } else {
             traderCall.setVisibility(View.INVISIBLE);
         }
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName(trader.getName())
+                .putContentType("Trader List")
+                .putContentId(String.valueOf(trader.getId())));
     }
-
 }

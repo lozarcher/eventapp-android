@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.iyaf.feed.NewsData;
 import com.loz.R;
 import com.loz.iyaf.feed.EventappService;
@@ -72,6 +75,7 @@ public class NewsListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                Crashlytics.logException(t);
                 spinner(false);
                 NewsList newsList = null;
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "news");
@@ -81,6 +85,7 @@ public class NewsListActivity extends AppCompatActivity  {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("cache", e.getMessage());
+                        Crashlytics.logException(e);
                     }
                     if (newsList != null) {
                         newsList.setNext(null); // just show one page if there's no internet connection
@@ -90,6 +95,10 @@ public class NewsListActivity extends AppCompatActivity  {
 
             }
         });
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Post List View")
+                .putContentType("Post List")
+                .putContentId("postlist"));
     }
 
     @UiThread
@@ -176,6 +185,7 @@ public class NewsListActivity extends AppCompatActivity  {
                         public void onFailure(Throwable t) {
                             // something went completely south (like no internet connection)
                             Log.d("Error", t.getMessage());
+                            Crashlytics.logException(t);
                         }
 
                     });

@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.R;
 import com.loz.iyaf.events.EventActivity;
 import com.loz.surbitonfood.events.EventListAdapter;
@@ -107,6 +110,7 @@ public class EventListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                Crashlytics.logException(t);
                 spinner(false);
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "events");
                 if (oi != null) {
@@ -115,11 +119,16 @@ public class EventListActivity extends AppCompatActivity  {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("cache", e.getMessage());
+                        Crashlytics.logException(e);
                     }
                     processEventList(eventList);
                 }
             }
         });
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Event List")
+                .putContentType("Events")
+                .putContentId("events"));
    }
 
     @UiThread

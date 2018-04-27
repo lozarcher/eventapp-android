@@ -1,10 +1,12 @@
 package com.loz.iyaf.imagehelpers;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.crashlytics.android.Crashlytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -40,6 +42,7 @@ public class Utils {
         }
         catch(NumberFormatException nfe)
         {
+            Crashlytics.logException(nfe);
             return false;
         }
         return true;
@@ -73,6 +76,7 @@ public class Utils {
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    Log.d("LOZ", "FAILED LOADING "+imageUri);
                     if (progressBar != null)
                         progressBar.setVisibility(View.GONE);
                 }

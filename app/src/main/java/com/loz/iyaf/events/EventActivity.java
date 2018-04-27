@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -101,7 +103,10 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
         } else {
             ticketButton.setVisibility(View.INVISIBLE);
         }
-
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName(event.getName())
+                .putContentType("Events")
+                .putContentId(String.valueOf(event.getId())));
     }
 
     @Override

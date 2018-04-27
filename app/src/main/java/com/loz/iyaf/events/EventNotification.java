@@ -14,6 +14,8 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.R;
 import com.loz.iyaf.feed.EventData;
 import com.loz.iyaf.mainmenu.MenuActivity;
@@ -52,6 +54,10 @@ public class EventNotification {
         } else {
             alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
         }
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Favourite: "+event.getName())
+                .putContentType("Favourite")
+                .putContentId("f"+event.getId()));
     }
 
     private static PendingIntent getIntent(Activity activity, Notification notification, EventData event) {

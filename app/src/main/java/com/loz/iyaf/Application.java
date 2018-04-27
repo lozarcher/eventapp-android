@@ -1,10 +1,9 @@
 package com.loz.iyaf;
 
-
 import com.loz.R;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-
+import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -17,7 +16,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.com_twitter_sdk_android_CONSUMER_KEY), getString(R.string.com_twitter_sdk_android_CONSUMER_SECRET));
-        Fabric.with(this, new Twitter(authConfig));
+        Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
         new Thread(() -> Twitter.getInstance()).start();
     }
 }

@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.R;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
@@ -37,6 +39,10 @@ public class TwitterListActivity extends AppCompatActivity {
                 showUi(adapter);
             });
         }).start();
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Twitter List")
+                .putContentType("Twitter List")
+                .putContentId("twitterlist"));
     }
 
     private void showUi(TweetTimelineListAdapter adapter) {

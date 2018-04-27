@@ -10,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.iyaf.feed.TraderList;
 import com.loz.iyaf.imagehelpers.JsonCache;
 import com.loz.iyaf.feed.EventappService;
@@ -69,6 +72,7 @@ public class TraderListActivity extends AppCompatActivity  {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                Crashlytics.logException(t);
                 spinner(false);
                 TraderList traderList = null;
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "traders");
@@ -78,6 +82,7 @@ public class TraderListActivity extends AppCompatActivity  {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("cache", e.getMessage());
+                        Crashlytics.logException(e);
                     }
                     if (traderList != null) {
                         processTraderList(traderList);
@@ -85,6 +90,10 @@ public class TraderListActivity extends AppCompatActivity  {
                 }
             }
         });
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Trader List View")
+                .putContentType("Trader List")
+                .putContentId("traderlist"));
     }
 
     @UiThread

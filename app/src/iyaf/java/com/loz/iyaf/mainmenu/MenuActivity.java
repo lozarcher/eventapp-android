@@ -2,12 +2,18 @@ package com.loz.iyaf.mainmenu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.iyaf.events.EventListActivity;
 import com.loz.iyaf.gallery.GalleryActivity;
 import com.loz.iyaf.info.InfoListActivity;
@@ -17,6 +23,8 @@ import com.loz.iyaf.twitter.TwitterListActivity;
 import com.loz.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import java.util.HashMap;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -29,7 +37,11 @@ public class MenuActivity extends AppCompatActivity {
 
         initImageLoader(getApplicationContext());
 
-        GridView gridview = (GridView) findViewById(R.id.gridView);
+        RelativeLayout layout = findViewById(R.id.layout);
+
+        layout.setBackgroundResource(backgroundImageForScreenSize());
+
+        GridView gridview = findViewById(R.id.gridView);
         gridview.setAdapter(new MenuAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,6 +76,10 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
         });
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Home View")
+                .putContentType("Home View")
+                .putContentId("home"));
     }
 
     @Override
@@ -79,4 +95,38 @@ public class MenuActivity extends AppCompatActivity {
                 .build();
         ImageLoader.getInstance().init(config);
     }
+
+    private int backgroundImageForScreenSize() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        HashMap<Float, Integer> backgroundImages = new HashMap<>();
+        backgroundImages.put(0.444f, R.drawable.app_background_0444);
+        backgroundImages.put(0.562f, R.drawable.app_background_0562);
+        backgroundImages.put(0.766f, R.drawable.app_background_0766);
+
+
+        float screenAspect = ((float)displayMetrics.widthPixels / (float)displayMetrics.heightPixels);
+        Log.d("LOZ","Screen size is "+displayMetrics.widthPixels+" "+displayMetrics.heightPixels);
+        Log.d("LOZ","Aspect is "+screenAspect);
+
+        float bestDistance = 999.0f;
+        Integer bestImageFile = 0;
+        for (Float imageAspect :backgroundImages.keySet()) {
+            Log.d("LOZ","Comparing aspect with  "+imageAspect);
+
+            float thisDistance = Math.abs(screenAspect - imageAspect);
+            if (thisDistance < bestDistance) {
+                bestDistance = thisDistance;
+                bestImageFile = backgroundImages.get(imageAspect);
+                Log.d("LOZ","Best aspect so far is "+imageAspect);
+                Log.d("LOZ","This is image "+bestImageFile);
+            }
+        }
+
+        Log.d("LOZ", "Best image : "+ bestImageFile);
+
+        return bestImageFile;
+    }
+
 }

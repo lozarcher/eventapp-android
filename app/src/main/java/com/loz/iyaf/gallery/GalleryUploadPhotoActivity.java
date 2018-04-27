@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.R;
 import com.loz.iyaf.feed.EventappService;
 import com.loz.iyaf.feed.GalleryList;
@@ -94,17 +97,23 @@ public class GalleryUploadPhotoActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Photo upload failed - please check your network connection or try again later", Toast.LENGTH_LONG).show();
                             Log.e("Upload", t.getMessage());
                             uploadButton.setEnabled(true);
+                            Crashlytics.logException(t);
                         }
                     });
 
 
                 }
             });
+            Answers.getInstance().logContentView(new ContentViewEvent()
+                    .putContentName("Gallery Upload")
+                    .putContentType("Gallery")
+                    .putContentId("gallery-upload"));
         } catch (FileNotFoundException e) {
             Toast.makeText(getApplicationContext(), "Uploaded image failed ", Toast.LENGTH_SHORT).show();
             Log.e("Upload", e.getMessage());
             uploadButton.setEnabled(true);
             e.printStackTrace();
+            Crashlytics.logException(e);
             return;
         }
     }

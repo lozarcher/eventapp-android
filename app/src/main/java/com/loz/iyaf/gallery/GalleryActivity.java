@@ -21,6 +21,9 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.BuildConfig;
 import com.loz.iyaf.feed.GalleryData;
 import com.loz.iyaf.imagehelpers.JsonCache;
@@ -82,6 +85,7 @@ public class GalleryActivity extends ActivityManagePermission {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.e("Error", t.getStackTrace().toString());
+                Crashlytics.logException(t);
                 GalleryList galleryList = null;
                 ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "gallery");
                 if (oi != null) {
@@ -90,6 +94,7 @@ public class GalleryActivity extends ActivityManagePermission {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("cache", e.getMessage());
+                        Crashlytics.logException(e);
                     }
                     if (galleryList != null) {
                         processGalleryList(galleryList);
@@ -97,6 +102,10 @@ public class GalleryActivity extends ActivityManagePermission {
                 }
             }
         });
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Gallery View")
+                .putContentType("Gallery")
+                .putContentId("gallery"));
     }
 
     private void processGalleryList(GalleryList galleryList) {
@@ -154,6 +163,8 @@ public class GalleryActivity extends ActivityManagePermission {
                                                 "Error: Couldn't save your photo",
                                                 Toast.LENGTH_SHORT).show();
                                         e.printStackTrace();
+                                        Crashlytics.logException(e);
+
                                     }
                                 }
 
@@ -231,6 +242,7 @@ public class GalleryActivity extends ActivityManagePermission {
                 } catch (Exception e) {
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
                             .show();
+                    Crashlytics.logException(e);
                 }
             }
             Intent intent = new Intent(GalleryActivity.this, GalleryUploadPhotoActivity.class);
@@ -244,8 +256,10 @@ public class GalleryActivity extends ActivityManagePermission {
                 fo.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                Crashlytics.logException(e);
             } catch (IOException e) {
                 e.printStackTrace();
+                Crashlytics.logException(e);
             }
 
             intent.putExtra("imagePath", imagePath);
@@ -294,6 +308,7 @@ public class GalleryActivity extends ActivityManagePermission {
             ei = new ExifInterface(photoPath);
         } catch (IOException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
 
         Bitmap bitmap = BitmapFactory.decodeFile(photoPath, bmOptions);
