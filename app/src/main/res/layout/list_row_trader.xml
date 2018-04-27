@@ -13,7 +13,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="7dip"
+        android:layout_marginRight="5dip"
         android:layout_marginLeft="5dip">
 
         <ImageView
@@ -29,6 +29,7 @@
         android:layout_height="fill_parent"
         android:layout_toRightOf="@+id/thumbnail"
         android:layout_toEndOf="@+id/thumbnail"
+        android:paddingTop="-2dp"
         android:paddingEnd="30dp"
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
