@@ -47,7 +47,7 @@ public class MenuAdapter extends BaseAdapter {
         holder.img = (ImageView) rowView.findViewById(R.id.menuImage);
 
         holder.img.setPadding(0, 0, 0, 0);
-        Utils.loadImage("drawable://" + mThumbIds[position], holder.img, null);
+        Utils.loadImage("drawable://" + mThumbIds[position], holder.img, null, 0);
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.CENTER_HORIZONTAL);

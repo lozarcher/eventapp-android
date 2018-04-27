@@ -61,7 +61,7 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
         //setFavouriteButton(event.isFavourite());
         ImageView eventImage = (ImageView) findViewById(R.id.eventImage);
         if (event.getCoverUrl() != null) {
-            Utils.loadImage(event.getCoverUrl(), eventImage, null);
+            Utils.loadImage(event.getCoverUrl(), eventImage, null, 0);
         }
 
         TextView eventDate = (TextView) findViewById(R.id.eventDate);

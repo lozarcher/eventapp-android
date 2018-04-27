@@ -112,9 +112,7 @@ public class EventListAdapter extends BaseAdapter {
                 clock.setTime(startTime);
                 clock.setScale(0.25f);
 
-                TextView eventTime = vi.findViewById(R.id.eventTime);
-                eventTime.setText(String.format("%02d:%02d", startTime.get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.MINUTE)));
-                subtitle.setText(event.getLocation());
+                subtitle.setText(String.format("%02d:%02d", startTime.get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.MINUTE)) + " @ "+event.getLocation());
                 break;
             case TYPE_SEPARATOR:
                 if (convertView == null)

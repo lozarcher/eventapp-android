@@ -55,7 +55,7 @@ public class InfoListAdapter extends BaseAdapter {
 
         // Setting all values in listview
         title.setText(trader.getTitle());
-        Utils.loadImage(trader.getThumb(), thumb_image, null);
+        Utils.loadImage(trader.getThumb(), thumb_image, null, 0);
         return vi;
     }
 }

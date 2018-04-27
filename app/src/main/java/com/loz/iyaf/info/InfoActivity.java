@@ -25,7 +25,7 @@ public class InfoActivity extends AppCompatActivity {
 
         ImageView infoImage = (ImageView) findViewById(R.id.infoImage);
         if (info.getPicture() != null) {
-            Utils.loadImage(info.getPicture(), infoImage, null);
+            Utils.loadImage(info.getPicture(), infoImage, null, 0);
         }
 
         TextView infoTitle = (TextView) findViewById(R.id.infoTitle);

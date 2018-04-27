@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.loz.R;
 import com.loz.iyaf.feed.EventData;
+import com.loz.iyaf.imagehelpers.Utils;
 import com.tomerrosenfeld.customanalogclockview.CustomAnalogClock;
 
 import java.util.ArrayList;
@@ -97,22 +98,15 @@ public class EventListAdapter extends BaseAdapter {
                     }
                 });
 
+                ImageView thumb_image=vi.findViewById(R.id.list_image); // thumb image
+                Utils.loadImage(event.getCoverUrl(), thumb_image, null, 10);
 
                 // Setting all values in listview
                 title.setText(event.getName());
                 Calendar startTime = GregorianCalendar.getInstance();
                 startTime.setTime(event.getStartTime());
 
-                CustomAnalogClock clock = vi.findViewById(R.id.analog_clock);
-                clock.init(activity, R.drawable.clock_face, R.drawable.clock_hourhand, R.drawable.clock_minutehand, 0, false, false);
-
-                clock.setAutoUpdate(false);
-                clock.setTime(startTime);
-                clock.setScale(0.2f);
-
-                TextView eventTime = vi.findViewById(R.id.eventTime);
-                eventTime.setText(String.format("%02d:%02d", startTime.get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.MINUTE)));
-                subtitle.setText(event.getLocation());
+                subtitle.setText(String.format("%02d:%02d", startTime.get(Calendar.HOUR_OF_DAY), startTime.get(Calendar.MINUTE))+" @ "+event.getLocation());
                 break;
             case TYPE_SEPARATOR:
                 if (convertView == null)

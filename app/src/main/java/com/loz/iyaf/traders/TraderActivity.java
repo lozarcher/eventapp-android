@@ -28,7 +28,7 @@ public class TraderActivity extends AppCompatActivity {
 
         ImageView traderImage = (ImageView) findViewById(R.id.traderImage);
         if (trader.getCoverImg() != null) {
-            Utils.loadImage(trader.getCoverImg(), traderImage, null);
+            Utils.loadImage(trader.getCoverImg(), traderImage, null, 0);
         }
 
         ImageView kpoundImage = (ImageView) findViewById(R.id.kpoundImage);

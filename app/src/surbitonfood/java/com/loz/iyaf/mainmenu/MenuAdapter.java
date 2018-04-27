@@ -74,7 +74,7 @@ public class MenuAdapter extends BaseAdapter {
 
 
 
-        Utils.loadImage("drawable://"+mThumbIds[position], holder.img, null);
+        Utils.loadImage("drawable://"+mThumbIds[position], holder.img, null, 0);
 
         holder.tv.setTextSize(convertPixelsToDp((float)(imageReferenceSize/9), mContext));
         holder.tv.setText(labels[position]);
@@ -95,7 +95,7 @@ public class MenuAdapter extends BaseAdapter {
                 lp.addRule(RelativeLayout.LEFT_OF, R.id.menuImage);
                 lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
                 holder.forkImg.setLayoutParams(lp);
-                Utils.loadImage("drawable://"+R.id.forkImage, holder.forkImg, null);
+                Utils.loadImage("drawable://"+R.id.forkImage, holder.forkImg, null, 0);
                 holder.forkImg.setVisibility(View.VISIBLE);
 
                 lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -105,11 +105,11 @@ public class MenuAdapter extends BaseAdapter {
                 lp.addRule(RelativeLayout.RIGHT_OF, R.id.menuImage);
                 lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
                 holder.knifeImg.setLayoutParams(lp);
-                Utils.loadImage("drawable://" + R.id.knifeImage, holder.knifeImg, null);
+                Utils.loadImage("drawable://" + R.id.knifeImage, holder.knifeImg, null, 0);
                 holder.knifeImg.setVisibility(View.VISIBLE);
                 break;
             case 2: // TEASPOON
-                Utils.loadImage("drawable://" + R.id.teaspoonImage, holder.teaspoonImg, null);
+                Utils.loadImage("drawable://" + R.id.teaspoonImage, holder.teaspoonImg, null, 0);
                 holder.teaspoonImg.setVisibility(View.VISIBLE);
                 lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.width=(int)(imageReferenceSize*0.6);
@@ -128,7 +128,7 @@ public class MenuAdapter extends BaseAdapter {
                 lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
                 lp.addRule(RelativeLayout.RIGHT_OF, R.id.menuImage);
                 holder.spoonImg.setLayoutParams(lp);
-                Utils.loadImage("drawable://" + R.id.spoonImage, holder.spoonImg, null);
+                Utils.loadImage("drawable://" + R.id.spoonImage, holder.spoonImg, null, 0);
                 holder.spoonImg.setVisibility(View.VISIBLE);
                 break;
             case 5:  // CHOPSTICKS
@@ -139,7 +139,7 @@ public class MenuAdapter extends BaseAdapter {
                 lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
                 lp.addRule(RelativeLayout.RIGHT_OF, R.id.menuImage);
                 holder.chopsticksImg.setLayoutParams(lp);
-                Utils.loadImage("drawable://" + R.id.chopsticksImage, holder.chopsticksImg, null);
+                Utils.loadImage("drawable://" + R.id.chopsticksImage, holder.chopsticksImg, null, 0);
                 holder.chopsticksImg.setVisibility(View.VISIBLE);
                 break;
         }

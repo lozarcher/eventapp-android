@@ -75,7 +75,7 @@ public class NewsListAdapter extends BaseAdapter {
 
         String imageUrl = newsItem.getPictureUrl();
         if (imageUrl != null) {
-            Utils.loadImage(newsItem.getPictureUrl(), newsImage, null);
+            Utils.loadImage(newsItem.getPictureUrl(), newsImage, null, 0);
             newsImage.setVisibility(View.VISIBLE);
         } else {
             newsImage.setVisibility(View.GONE);

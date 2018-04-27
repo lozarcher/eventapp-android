@@ -56,7 +56,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
         imgDisplay = (TouchImageView) viewLayout.findViewById(R.id.imgDisplay);
         TextView captionView = (TextView) viewLayout.findViewById(R.id.captionView);
 
-        Utils.loadImage(_images.get(position).getPicture(), imgDisplay, null);
+        Utils.loadImage(_images.get(position).getPicture(), imgDisplay, null, 0);
 
         String user = _images.get(position).getUser();
         String caption = _images.get(position).getCaption();

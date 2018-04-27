@@ -56,7 +56,7 @@ public class GalleryAdapter extends BaseAdapter {
         final ProgressBar progressBar = (ProgressBar)vi.findViewById(R.id.progress);
 
         GalleryData photo = data.get(position);
-        Utils.loadImage(photo.getThumb(), imageView, progressBar);
+        Utils.loadImage(photo.getThumb(), imageView, progressBar, 0);
         imageView.setOnClickListener(new OnImageClickListener(position));
         return vi;
  }
