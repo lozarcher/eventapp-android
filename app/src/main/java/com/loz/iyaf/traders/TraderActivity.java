@@ -74,6 +74,7 @@ public class TraderActivity extends AppCompatActivity {
         }
 
         TextView traderCall = (TextView) findViewById(R.id.callButton);
+        trader.setPhone(trader.getPhone().replaceAll("\\s",""));
         if (trader.getPhone() != null && Utils.isNumeric(trader.getPhone())) {
             traderCall.setText("Call " + trader.getName());
             traderCall.setVisibility(View.VISIBLE);
