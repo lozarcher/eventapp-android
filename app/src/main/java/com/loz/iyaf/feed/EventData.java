@@ -18,6 +18,7 @@ public class EventData implements Serializable {
     private VenueData venue;
     private String ticketUrl;
     private boolean isFavourite;
+    private Long eventId;
     private int notificaitonId;
 
     public EventData() {
@@ -137,5 +138,13 @@ public class EventData implements Serializable {
 
     public void setNotificaitonId(int notificaitonId) {
         this.notificaitonId = notificaitonId;
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 }

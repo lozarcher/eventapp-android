@@ -1,25 +1,16 @@
 package com.loz.iyaf.events;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.provider.CalendarContract;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +28,6 @@ import com.loz.iyaf.feed.EventData;
 import com.loz.iyaf.imagehelpers.Utils;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
@@ -47,6 +36,7 @@ import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 public class EventActivity extends ActivityManagePermission implements OnMapReadyCallback {
 
     private EventData event;
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +102,27 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.event_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_share);
+//        item.setIcon(R.drawable.ic_share);
+//
+//        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        //MenuItem item = menu.add(Menu.NONE, R.id.action_share, Menu.NONE, "Share");
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        mShareActionProvider = new ShareActionProvider(this) {
+            @Override
+            public View onCreateActionView() {
+                return null;
+            }
+        };
+        item.setIcon(R.drawable.ic_share);
+        MenuItemCompat.setActionProvider(item, mShareActionProvider);
+
+        Intent myShareIntent = new Intent(Intent.ACTION_SEND);
+        myShareIntent.setType("text/plain");
+        myShareIntent.putExtra(Intent.EXTRA_TEXT, event.getName()+" https://www.facebook.com/events/"+event.getEventId());
+        mShareActionProvider.setShareIntent(myShareIntent);
+
         return true;
     }
 
@@ -128,6 +139,9 @@ public class EventActivity extends ActivityManagePermission implements OnMapRead
         switch (item.getItemId()) {
             case R.id.action_favourite:
                 tappedFavouriteButton();
+                break;
+            case R.id.action_share:
+                Log.d("LOZ", "Share event tapped");
                 break;
             case android.R.id.home:
                 onBackPressed();

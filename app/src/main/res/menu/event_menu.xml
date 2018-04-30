@@ -3,10 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 >
 
+    <!-- "Mark Share", should appear as action button if possible -->
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share"
+        android:title="Share Event"
+        app:showAsAction="always"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
+
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/action_favourite"
         android:icon="@drawable/ic_favorite_set"
         android:title="Set Favourite"
         app:showAsAction="always"/>
+
 </menu>

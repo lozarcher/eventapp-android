@@ -45,8 +45,8 @@ android {
             applicationIdSuffix ".surbitonfoodfestival"
             minSdkVersion 16
             targetSdkVersion 27
-            versionCode 10
-            versionName "2.3"
+            versionCode 11
+            versionName "2.4"
             signingConfig signingConfigs.androidKey
         }
         iyaf {
@@ -55,8 +55,8 @@ android {
             applicationIdSuffix ".iyaf"
             minSdkVersion 16
             targetSdkVersion 27
-            versionCode 10
-            versionName "2.3"
+            versionCode 11
+            versionName "2.4"
             signingConfig signingConfigs.androidKey
         }
     }
@@ -65,10 +65,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:support-compat:27.1.0'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:support-compat:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     implementation 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
     implementation 'com.google.android.gms:play-services-maps:12.0.0'
@@ -82,7 +82,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.2@aar') {
         transitive = true;
     }
-    implementation 'com.android.support:cardview-v7:27.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.1'
 
 }
 
