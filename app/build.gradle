@@ -45,8 +45,8 @@ android {
             applicationIdSuffix ".surbitonfoodfestival"
             minSdkVersion 16
             targetSdkVersion 27
-            versionCode 11
-            versionName "2.4"
+            versionCode 12
+            versionName "2.5-SNAPSHOT"
             signingConfig signingConfigs.androidKey
         }
         iyaf {
@@ -55,8 +55,8 @@ android {
             applicationIdSuffix ".iyaf"
             minSdkVersion 16
             targetSdkVersion 27
-            versionCode 11
-            versionName "2.4"
+            versionCode 12
+            versionName "2.5-SNAPSHOT"
             signingConfig signingConfigs.androidKey
         }
     }
