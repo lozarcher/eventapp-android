@@ -1,11 +1,12 @@
 package com.loz.iyaf.feed;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by loz on 27/03/16.
  */
-public class InfoList {
+public class InfoList implements Serializable {
     private Date date;
     private Iterable<InfoData> data;
 

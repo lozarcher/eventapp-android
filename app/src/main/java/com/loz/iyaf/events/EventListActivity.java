@@ -98,8 +98,8 @@ public class EventListActivity extends AppCompatActivity  {
             public void onResponse(Response<EventList> response, Retrofit retrofit) {
                 Log.d("LOZ", "Got response: "+response.body().toString());
                 eventList = response.body();
-                JsonCache.writeToCache(getApplicationContext(), eventList, "events");
                 readFavourites();
+                JsonCache.writeToCache(getApplicationContext(), eventList, "events");
                 spinner(false);
                 processEventList(eventList);
             }
@@ -114,6 +114,7 @@ public class EventListActivity extends AppCompatActivity  {
                 if (oi != null) {
                     try {
                         eventList = (EventList) oi.readObject();
+                        readFavourites();
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("cache", e.getMessage());
@@ -289,6 +290,7 @@ public class EventListActivity extends AppCompatActivity  {
         String preferencesKey = getString(R.string.favourites_pref_key);
         SharedPreferences sharedPref = getApplication().getSharedPreferences(preferencesKey,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
         editor.putStringSet(preferencesKey, this.favourites);
         Log.d("LOZ", "Saved favourites: "+this.favourites+ " with key "+preferencesKey);
         editor.commit();
