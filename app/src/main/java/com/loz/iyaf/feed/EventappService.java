@@ -13,7 +13,7 @@ import retrofit.http.PartMap;
 import retrofit.http.Path;
 
 public interface EventappService {
-    @GET("/events")
+    @GET("/v4/events")
     Call<EventList> getEvents();
 
     @GET("/gallery")

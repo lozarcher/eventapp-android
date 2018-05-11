@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class EventList implements Serializable {
     private Date date;
-    private Iterable<EventData> data;
-
+    private Iterable<EventData> events;
+    private Iterable<CategoryData> categories;
     public EventList() {
     }
 
@@ -18,11 +18,19 @@ public class EventList implements Serializable {
         this.date = date;
     }
 
-    public Iterable<EventData> getData() {
-        return data;
+    public Iterable<EventData> getEvents() {
+        return events;
     }
 
-    public void setData(Iterable<EventData> data) {
-        this.data = data;
+    public void setEvents(Iterable<EventData> events) {
+        this.events = events;
+    }
+
+    public Iterable<CategoryData> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Iterable<CategoryData> categories) {
+        this.categories = categories;
     }
 }
