@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,9 +32,11 @@ import java.io.ObjectInput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -66,6 +70,36 @@ public class EventListActivity extends AppCompatActivity  {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedCategory = (CategoryData)tab.getTag();
+
+                switch (selectedCategory.getCategoryType()) {
+                    case FAVOURITES:
+                        emptyList.setText(R.string.emptyFavouritesList);
+                        break;
+                    default:
+                         emptyList.setText(R.string.emptyEventsList);
+                }
+                processEventList(eventList);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
         EventappService eventappService = retrofit.create(EventappService.class);
         Call<EventList> call = eventappService.getEvents();
         Log.d("LOZ", "Starting call to /v4//events... Hope it works...");
@@ -76,8 +110,9 @@ public class EventListActivity extends AppCompatActivity  {
                 Log.d("LOZ", "Got response: "+response.body().toString());
                 eventList = response.body();
                 readFavourites();
-                JsonCache.writeToCache(getApplicationContext(), eventList, "events");
+                JsonCache.writeToCache(getApplicationContext(), eventList, "eventsv4");
                 spinner(false);
+                processCategories();
                 processEventList(eventList);
             }
 
@@ -87,7 +122,7 @@ public class EventListActivity extends AppCompatActivity  {
                 Log.d("Error", t.getMessage());
                 Crashlytics.logException(t);
                 spinner(false);
-                ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "events");
+                ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "eventsv4");
                 if (oi != null) {
                     try {
                         eventList = (EventList) oi.readObject();
@@ -97,6 +132,7 @@ public class EventListActivity extends AppCompatActivity  {
                         Log.e("cache", e.getMessage());
                         Crashlytics.logException(e);
                     }
+                    processCategories();
                     processEventList(eventList);
                 }
             }
@@ -140,6 +176,24 @@ public class EventListActivity extends AppCompatActivity  {
                     adapter.addItem(event);
                     eventRows.add(event);
                 }
+            }
+
+
+        }
+
+    }
+
+    private void processCategories() {
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.removeAllTabs();
+        Iterable<CategoryData> categoryList = eventList.getCategories();
+        for (CategoryData categoryData : categoryList) {
+            TabLayout.Tab tab = tabLayout.newTab().setText(categoryData.getCategory());
+            tab.setTag(categoryData);
+            tabLayout.addTab(tab);
+
+            if (categoryData.getCategoryType().equals(CategoryType.ALL)) {
+                selectedCategory = categoryData;
             }
         }
 

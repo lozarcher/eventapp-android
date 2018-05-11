@@ -22,6 +22,7 @@ public class EventData implements Serializable {
     private Iterable<Long> categories;
 
     private int notificaitonId;
+    private Iterable<Long> categories;
 
     public EventData() {
     }

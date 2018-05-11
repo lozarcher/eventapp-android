@@ -3,15 +3,14 @@ package com.loz.surbitonfood.events;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,9 +19,9 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.loz.R;
 import com.loz.iyaf.events.EventActivity;
+import com.loz.iyaf.events.EventNotification;
 import com.loz.iyaf.feed.CategoryData;
 import com.loz.iyaf.feed.CategoryType;
-import com.loz.iyaf.events.EventNotification;
 import com.loz.iyaf.feed.EventData;
 import com.loz.iyaf.feed.EventList;
 import com.loz.iyaf.feed.EventappService;
@@ -68,6 +67,36 @@ public class EventListActivity extends AppCompatActivity  {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedCategory = (CategoryData)tab.getTag();
+
+                switch (selectedCategory.getCategoryType()) {
+                    case FAVOURITES:
+                        emptyList.setText(R.string.emptyFavouritesList);
+                        break;
+                    default:
+                        emptyList.setText(R.string.emptyEventsList);
+                }
+                processEventList(eventList);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
         EventappService eventappService = retrofit.create(EventappService.class);
         Call<EventList> call = eventappService.getEvents();
         Log.d("LOZ", "Starting call to /v4//events... Hope it works...");
@@ -78,8 +107,9 @@ public class EventListActivity extends AppCompatActivity  {
                 Log.d("LOZ", "Got response: "+response.body().toString());
                 eventList = response.body();
                 readFavourites();
-                JsonCache.writeToCache(getApplicationContext(), eventList, "events");
+                JsonCache.writeToCache(getApplicationContext(), eventList, "eventsv4");
                 spinner(false);
+                processCategories();
                 processEventList(eventList);
             }
 
@@ -89,7 +119,7 @@ public class EventListActivity extends AppCompatActivity  {
                 Log.d("Error", t.getMessage());
                 Crashlytics.logException(t);
                 spinner(false);
-                ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "events");
+                ObjectInput oi = JsonCache.readFromCache(getApplicationContext(), "eventsv4");
                 if (oi != null) {
                     try {
                         eventList = (EventList) oi.readObject();
@@ -99,6 +129,7 @@ public class EventListActivity extends AppCompatActivity  {
                         Log.e("cache", e.getMessage());
                         Crashlytics.logException(e);
                     }
+                    processCategories();
                     processEventList(eventList);
                 }
             }
@@ -107,7 +138,7 @@ public class EventListActivity extends AppCompatActivity  {
                 .putContentName("Event List")
                 .putContentType("Events")
                 .putContentId("events"));
-   }
+    }
 
     @UiThread
     void spinner(boolean show){
@@ -118,14 +149,13 @@ public class EventListActivity extends AppCompatActivity  {
 
 
     private void processEventList(EventList eventList) {
-        processCategories();
-
         if (eventList != null) {
             ArrayList<String> eventNames = new ArrayList<>();
             ArrayList<EventData> events = new ArrayList<>();
             for (EventData event : eventList.getEvents()) {
                 events.add(event);
                 eventNames.add(event.getName());
+                Log.d("LOZ", "Got event " + event.getName());
             }
             ListView listView = findViewById(R.id.listView);
 
@@ -149,58 +179,19 @@ public class EventListActivity extends AppCompatActivity  {
 
     }
 
-    private void highlightSelectedCategory() {
-        LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
-        for (int i=0; i < categoryLayout.getChildCount(); i++) {
-            TextView textView = (TextView)categoryLayout.getChildAt(i);
-            CategoryData categoryForItem = (CategoryData)textView.getTag();
-            if (categoryForItem.getId() == selectedCategory.getId()) {
-                textView.setBackground(getResources().getDrawable(R.drawable.categoryselect));
-            } else {
-                textView.setBackground(null);
-            }
-        }
-    }
-
     private void processCategories() {
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.removeAllTabs();
+        Iterable<CategoryData> categoryList = eventList.getCategories();
+        for (CategoryData categoryData : categoryList) {
+            TabLayout.Tab tab = tabLayout.newTab().setText(categoryData.getCategory());
+            tab.setTag(categoryData);
+            tabLayout.addTab(tab);
 
-        LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
-        categoryLayout.removeAllViews();
-        for (CategoryData categoryData : eventList.getCategories()) {
-            TextView textView = new TextView(this);
-            textView.setText(categoryData.getCategory());
-            textView.setPadding(30, 20, 30, 22);
-            textView.setTag(categoryData);
-            textView.setTextColor(Color.BLACK);
-            categoryLayout.addView(textView);
-            TextView emptyList = findViewById(R.id.emptyList);
-
-            switch (categoryData.getCategoryType()) {
-                case FAVOURITES:
-                    textView.setOnClickListener(v -> {
-                        selectedCategory = (CategoryData) v.getTag();
-                        emptyList.setText(R.string.emptyFavouritesList);
-                        processEventList(eventList);
-                    });
-                    break;
-                case ALL:
-                    if (selectedCategory == null) {
-                        selectedCategory = categoryData;
-                    }
-                    textView.setOnClickListener(v -> {
-                        selectedCategory = (CategoryData) v.getTag();
-                        emptyList.setText(R.string.emptyEventsList);
-                        processEventList(eventList);
-                    });
-                case FILTER:
-                    textView.setOnClickListener(v -> {
-                        selectedCategory = (CategoryData) v.getTag();
-                        emptyList.setText(R.string.emptyEventsList);
-                        processEventList(eventList);
-                    });
+            if (categoryData.getCategoryType().equals(CategoryType.ALL)) {
+                selectedCategory = categoryData;
             }
         }
-        highlightSelectedCategory();
     }
 
     private TreeMap<Date, ArrayList<EventData>> getEventsByDay(ArrayList<EventData> events) {
