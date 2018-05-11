@@ -3,6 +3,7 @@ package com.loz.surbitonfood.events;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,6 @@ import com.loz.R;
 import com.loz.iyaf.events.EventActivity;
 import com.loz.iyaf.feed.CategoryData;
 import com.loz.iyaf.feed.CategoryType;
-import com.loz.surbitonfood.events.EventListAdapter;
 import com.loz.iyaf.events.EventNotification;
 import com.loz.iyaf.feed.EventData;
 import com.loz.iyaf.feed.EventList;
@@ -149,7 +149,21 @@ public class EventListActivity extends AppCompatActivity  {
 
     }
 
+    private void highlightSelectedCategory() {
+        LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
+        for (int i=0; i < categoryLayout.getChildCount(); i++) {
+            TextView textView = (TextView)categoryLayout.getChildAt(i);
+            CategoryData categoryForItem = (CategoryData)textView.getTag();
+            if (categoryForItem.getId() == selectedCategory.getId()) {
+                textView.setTextColor(Color.RED);
+            } else {
+                textView.setTextColor(Color.BLACK);
+            }
+        }
+    }
+
     private void processCategories() {
+
         LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
         for (CategoryData categoryData : eventList.getCategories()) {
             TextView textView = new TextView(this);
@@ -184,7 +198,9 @@ public class EventListActivity extends AppCompatActivity  {
                     });
             }
         }
+        highlightSelectedCategory();
     }
+
     private TreeMap<Date, ArrayList<EventData>> getEventsByDay(ArrayList<EventData> events) {
         TreeMap<Date, ArrayList<EventData>> map = new TreeMap<>();
         for (EventData event : events) {

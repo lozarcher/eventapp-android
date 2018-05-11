@@ -140,10 +140,7 @@ public class EventListActivity extends AppCompatActivity  {
                     eventRows.add(event);
                 }
             }
-
-
         }
-
     }
 
     private void processCategories() {
