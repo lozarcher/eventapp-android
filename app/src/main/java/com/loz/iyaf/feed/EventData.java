@@ -20,9 +20,7 @@ public class EventData implements Serializable {
     private boolean isFavourite;
     private Long eventId;
     private Iterable<Long> categories;
-
     private int notificaitonId;
-    private Iterable<Long> categories;
 
     public EventData() {
     }

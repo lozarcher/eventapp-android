@@ -152,8 +152,6 @@ public class EventListActivity extends AppCompatActivity  {
 
 
     private void processEventList(EventList eventList) {
-        processCategories();
-
         if (eventList != null) {
             ArrayList<String> eventNames = new ArrayList<>();
             ArrayList<EventData> events = new ArrayList<>();
@@ -177,8 +175,6 @@ public class EventListActivity extends AppCompatActivity  {
                     eventRows.add(event);
                 }
             }
-
-
         }
 
     }
@@ -197,60 +193,6 @@ public class EventListActivity extends AppCompatActivity  {
             }
         }
 
-    }
-
-    private void highlightSelectedCategory() {
-        LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
-        for (int i=0; i < categoryLayout.getChildCount(); i++) {
-            TextView textView = (TextView)categoryLayout.getChildAt(i);
-            CategoryData categoryForItem = (CategoryData)textView.getTag();
-            if (categoryForItem.getId() == selectedCategory.getId()) {
-                textView.setBackground(getResources().getDrawable(R.drawable.categoryselect));
-            } else {
-                textView.setBackground(null);
-            }
-        }
-    }
-
-    private void processCategories() {
-
-        LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
-        categoryLayout.removeAllViews();
-        for (CategoryData categoryData : eventList.getCategories()) {
-            TextView textView = new TextView(this);
-            textView.setText(categoryData.getCategory());
-            textView.setPadding(30, 20, 30, 22);
-            textView.setTag(categoryData);
-            textView.setTextColor(Color.BLACK);
-            categoryLayout.addView(textView);
-            TextView emptyList = findViewById(R.id.emptyList);
-
-            switch (categoryData.getCategoryType()) {
-                case FAVOURITES:
-                    textView.setOnClickListener(v -> {
-                        selectedCategory = (CategoryData) v.getTag();
-                        emptyList.setText(R.string.emptyFavouritesList);
-                        processEventList(eventList);
-                    });
-                    break;
-                case ALL:
-                    if (selectedCategory == null) {
-                        selectedCategory = categoryData;
-                    }
-                    textView.setOnClickListener(v -> {
-                        selectedCategory = (CategoryData) v.getTag();
-                        emptyList.setText(R.string.emptyEventsList);
-                        processEventList(eventList);
-                    });
-                case FILTER:
-                    textView.setOnClickListener(v -> {
-                        selectedCategory = (CategoryData) v.getTag();
-                        emptyList.setText(R.string.emptyEventsList);
-                        processEventList(eventList);
-                    });
-            }
-        }
-        highlightSelectedCategory();
     }
 
     private TreeMap<Date, ArrayList<EventData>> getEventsByDay(ArrayList<EventData> events) {
