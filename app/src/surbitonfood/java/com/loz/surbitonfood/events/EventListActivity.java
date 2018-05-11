@@ -198,7 +198,7 @@ public class EventListActivity extends AppCompatActivity  {
             EventData event = (EventData)parent.getAdapter().getItem(position);
             Intent intent = new Intent(EventListActivity.this, EventActivity.class);
             Bundle b = new Bundle();
-            if (event != null) {
+            if (event.getId() != null) {
                 b.putSerializable("event", event);
                 intent.putExtras(b);
                 startActivityForResult(intent, SHOW_EVENT_DETAIL);
