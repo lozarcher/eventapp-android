@@ -3,6 +3,7 @@ package com.loz.iyaf.events;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
@@ -141,15 +142,32 @@ public class EventListActivity extends AppCompatActivity  {
                 }
             }
         }
+
+    }
+
+    private void highlightSelectedCategory() {
+        LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
+        for (int i=0; i < categoryLayout.getChildCount(); i++) {
+            TextView textView = (TextView)categoryLayout.getChildAt(i);
+            CategoryData categoryForItem = (CategoryData)textView.getTag();
+            if (categoryForItem.getId() == selectedCategory.getId()) {
+                textView.setBackground(getResources().getDrawable(R.drawable.categoryselect));
+            } else {
+                textView.setBackground(null);
+            }
+        }
     }
 
     private void processCategories() {
+
         LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
+        categoryLayout.removeAllViews();
         for (CategoryData categoryData : eventList.getCategories()) {
             TextView textView = new TextView(this);
             textView.setText(categoryData.getCategory());
-            textView.setPadding(40, 40, 40, 40);
+            textView.setPadding(30, 20, 30, 22);
             textView.setTag(categoryData);
+            textView.setTextColor(Color.BLACK);
             categoryLayout.addView(textView);
             TextView emptyList = findViewById(R.id.emptyList);
 
@@ -178,7 +196,9 @@ public class EventListActivity extends AppCompatActivity  {
                     });
             }
         }
+        highlightSelectedCategory();
     }
+
     private TreeMap<Date, ArrayList<EventData>> getEventsByDay(ArrayList<EventData> events) {
         TreeMap<Date, ArrayList<EventData>> map = new TreeMap<>();
         for (EventData event : events) {

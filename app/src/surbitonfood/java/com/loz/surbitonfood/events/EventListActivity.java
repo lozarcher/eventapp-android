@@ -155,9 +155,9 @@ public class EventListActivity extends AppCompatActivity  {
             TextView textView = (TextView)categoryLayout.getChildAt(i);
             CategoryData categoryForItem = (CategoryData)textView.getTag();
             if (categoryForItem.getId() == selectedCategory.getId()) {
-                textView.setTextColor(Color.RED);
+                textView.setBackground(getResources().getDrawable(R.drawable.categoryselect));
             } else {
-                textView.setTextColor(Color.BLACK);
+                textView.setBackground(null);
             }
         }
     }
@@ -165,11 +165,13 @@ public class EventListActivity extends AppCompatActivity  {
     private void processCategories() {
 
         LinearLayout categoryLayout = findViewById(R.id.categoryLayout);
+        categoryLayout.removeAllViews();
         for (CategoryData categoryData : eventList.getCategories()) {
             TextView textView = new TextView(this);
             textView.setText(categoryData.getCategory());
-            textView.setPadding(40, 40, 40, 40);
+            textView.setPadding(30, 20, 30, 22);
             textView.setTag(categoryData);
+            textView.setTextColor(Color.BLACK);
             categoryLayout.addView(textView);
             TextView emptyList = findViewById(R.id.emptyList);
 
