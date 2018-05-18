@@ -1,5 +1,7 @@
 package com.loz.iyaf.feed;
 
-public enum CategoryType {
+import java.io.Serializable;
+
+public enum CategoryType implements Serializable {
     ALL, FAVOURITES, FILTER
 }

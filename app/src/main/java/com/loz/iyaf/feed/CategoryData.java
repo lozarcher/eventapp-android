@@ -1,6 +1,8 @@
 package com.loz.iyaf.feed;
 
-public class CategoryData {
+import java.io.Serializable;
+
+public class CategoryData implements Serializable {
     private long id;
     private String category;
     private CategoryType categoryType;
