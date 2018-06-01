@@ -73,20 +73,25 @@ public class TraderActivity extends AppCompatActivity {
             traderFacebook.setVisibility(View.INVISIBLE);
         }
 
+        boolean traderNumberValid = false;
         TextView traderCall = (TextView) findViewById(R.id.callButton);
-        trader.setPhone(trader.getPhone().replaceAll("\\s",""));
-        if (trader.getPhone() != null && Utils.isNumeric(trader.getPhone())) {
-            traderCall.setText("Call " + trader.getName());
-            traderCall.setVisibility(View.VISIBLE);
-            traderCall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent callIntent = new Intent(Intent.ACTION_VIEW);
-                    callIntent.setData(Uri.parse("tel:" + trader.getPhone()));
-                    startActivity(callIntent);
-                }
-            });
-        } else {
+        if (trader.getPhone() != null) {
+            trader.setPhone(trader.getPhone().replaceAll("\\s",""));
+            if (Utils.isNumeric(trader.getPhone())) {
+                traderNumberValid = true;
+                traderCall.setText("Call " + trader.getName());
+                traderCall.setVisibility(View.VISIBLE);
+                traderCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent callIntent = new Intent(Intent.ACTION_VIEW);
+                        callIntent.setData(Uri.parse("tel:" + trader.getPhone()));
+                        startActivity(callIntent);
+                    }
+                });
+            }
+        }
+        if (!traderNumberValid) {
             traderCall.setVisibility(View.INVISIBLE);
         }
         Answers.getInstance().logContentView(new ContentViewEvent()
