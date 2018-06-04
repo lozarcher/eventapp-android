@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.hardware.display.DisplayManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.crashlytics.android.answers.Answers;
@@ -24,6 +26,7 @@ import com.loz.iyaf.twitter.TwitterListActivity;
 import com.loz.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -40,9 +43,7 @@ public class MenuActivity extends AppCompatActivity {
 
         initImageLoader(getApplicationContext());
 
-        RelativeLayout layout = findViewById(R.id.layout);
-
-        layout.setBackgroundResource(backgroundImageForScreenSize());
+        displayBackgroundImageForScreenSize();
 
         GridView gridview = findViewById(R.id.gridView);
         gridview.setAdapter(new MenuAdapter(this));
@@ -107,7 +108,7 @@ public class MenuActivity extends AppCompatActivity {
         return displayMetrics;
     }
 
-    private int backgroundImageForScreenSize() {
+    private void displayBackgroundImageForScreenSize() {
         DisplayMetrics displayMetrics = getDisplayMetrics();
 
         HashMap<Float, Integer> backgroundImages = new HashMap<>();
@@ -136,7 +137,14 @@ public class MenuActivity extends AppCompatActivity {
 
         Log.d("LOZ", "Best image : "+ bestImageFile);
 
-        return bestImageFile;
+        ImageView backgroundImage = findViewById(R.id.backgroundImage);
+
+        Picasso
+                .with(this)
+                .load(bestImageFile)
+                .resize(displayMetrics.widthPixels, displayMetrics.heightPixels)
+                .onlyScaleDown() // the image will only be resized if it's bigger than 2048x 1600 pixels.
+                .into(backgroundImage);
     }
 
     private void setTopMarginOfMenu(GridView gridView) {
