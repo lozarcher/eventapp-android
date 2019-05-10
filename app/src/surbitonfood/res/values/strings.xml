@@ -7,6 +7,6 @@
     <string name="favourites_pref_key">com.loz.surbitonfood.favourites</string>
     <string name="channel_name">Event notifications</string>
     <string name="channel_description">Receive a reminder for your favourite events when they are about to start</string>
-    <string name="com_twitter_sdk_android_CONSUMER_KEY">WR5ZGa38CClNLyIYeQ8zCttJx</string>
-    <string name="com_twitter_sdk_android_CONSUMER_SECRET">3EPE934R3FhkwKLZqOcuQmZTqrZeixL3Dvfm08tOoyiobSAJeA</string>
+    <string name="com_twitter_sdk_android_CONSUMER_KEY"></string>
+    <string name="com_twitter_sdk_android_CONSUMER_SECRET"></string>
 </resources>
