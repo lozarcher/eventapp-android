@@ -28,6 +28,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class MenuActivity extends AppCompatActivity {
@@ -111,37 +113,18 @@ public class MenuActivity extends AppCompatActivity {
     private void displayBackgroundImageForScreenSize() {
         DisplayMetrics displayMetrics = getDisplayMetrics();
 
-        HashMap<Float, Integer> backgroundImages = new HashMap<>();
-        backgroundImages.put(0.444f, R.drawable.app_background_0444);
-        backgroundImages.put(0.562f, R.drawable.app_background_0562);
-        backgroundImages.put(0.766f, R.drawable.app_background_0766);
+        ArrayList<Integer> images = new ArrayList<>(
+                Arrays.asList(R.drawable.iyaf1,R.drawable.iyaf2,R.drawable.iyaf3,R.drawable.iyaf4,R.drawable.iyaf5)
+        );
+        int randomIndex = (int) (Math.random() * images.size());
 
-
-        float screenAspect = ((float)displayMetrics.widthPixels / (float)displayMetrics.heightPixels);
-        Log.d("LOZ","Screen size is "+displayMetrics.widthPixels+" "+displayMetrics.heightPixels);
-        Log.d("LOZ","Aspect is "+screenAspect);
-
-        float bestDistance = 999.0f;
-        Integer bestImageFile = 0;
-        for (Float imageAspect :backgroundImages.keySet()) {
-            Log.d("LOZ","Comparing aspect with  "+imageAspect);
-
-            float thisDistance = Math.abs(screenAspect - imageAspect);
-            if (thisDistance < bestDistance) {
-                bestDistance = thisDistance;
-                bestImageFile = backgroundImages.get(imageAspect);
-                Log.d("LOZ","Best aspect so far is "+imageAspect);
-                Log.d("LOZ","This is image "+bestImageFile);
-            }
-        }
-
-        Log.d("LOZ", "Best image : "+ bestImageFile);
+        Log.d("LOZ", "Best image : "+ images.get(randomIndex));
 
         ImageView backgroundImage = findViewById(R.id.backgroundImage);
 
         Picasso
                 .with(this)
-                .load(bestImageFile)
+                .load(images.get(randomIndex))
                 .resize(displayMetrics.widthPixels, displayMetrics.heightPixels)
                 .onlyScaleDown() // the image will only be resized if it's bigger than 2048x 1600 pixels.
                 .into(backgroundImage);
