@@ -13,6 +13,6 @@ This project currently builds two festival apps in the store, shown below. The t
 
 ### Related Repositories
 
-[iPhone App: eventapp-ios](https://github.com/lozarcher/eventapp-ios) 
+[iPhone App: eventapp-ios](https://github.com/lozarcher/eventapp-ios/blob/master/Screenshots/iyaf2016.jpg?raw=true) 
 
 [eventapp-feeder](https://github.com/lozarcher/eventapp-feeder/), which exposes data as REST endpoints to be consumed by the apps.
