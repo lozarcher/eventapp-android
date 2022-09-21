@@ -9,10 +9,10 @@ This project currently builds two festival apps in the store, shown below. The t
 
 ### International Youth Arts Festival - [Store](http://onelink.to/iyaf)
 
-![IYAF screenshot](http://eventapp.lozarcher.co.uk/iyaf2018.jpg) 
+![IYAF screenshot](https://github.com/lozarcher/eventapp-ios/blob/master/Screenshots/iyaf2016.jpg?raw=true) 
 
 ### Related Repositories
 
-[iPhone App: eventapp-ios](https://github.com/lozarcher/eventapp-ios/blob/master/Screenshots/iyaf2016.jpg?raw=true) 
+[iPhone App: eventapp-ios](https://github.com/lozarcher/eventapp-ios) 
 
 [eventapp-feeder](https://github.com/lozarcher/eventapp-feeder/), which exposes data as REST endpoints to be consumed by the apps.
